@@ -1,0 +1,22 @@
+{
+  "name": "unitof",
+  "version": "1.0.00",
+  "description": "A unit of measurement and data type conversion library (Also available in Java and C#)",
+  "main": "UnitOf.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Digidemic/UnitOf.git"
+  },
+  "keywords": [
+    "unit", "measurement", "measurements", "datatype", "data", "type", "parse", "parser", "parsing", "conversion", "stateless", "math", "fractions","convert", "standalone"
+  ],
+  "author": "Adam Steinberg of Digidemic, LLC",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Digidemic/UnitOf/issues"
+  },
+  "homepage": "https://github.com/Digidemic/UnitOf#readme"
+}

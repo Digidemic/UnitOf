@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<!--
+/**
+ * https://github.com/Digidemic/UnitOf
+ * (c) 2018 DIGIDEMIC, LLC - All Rights Reserved
+ * UnitOf developed by Adam Steinberg of DIGIDEMIC, LLC
+ * License: Apache License 2.0
+ *
+ * ====
+ *
+ * Copyright 2018 DIGIDEMIC, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ -->
+<html lang="en">
+
+<head>
+    <title>UnitOf - Convert anything into everything</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A measurement and data type conversion library for Java, JavaScript, and C#. Containing over 20 complete units of measure, ability to create your own measurement at compile or run-time, and parsing of fractions or programming data types without error. UnitOf is easy to use, fast in performance, and is super small in size (entire suite as little as 64kb). Other notable attributes of UnitOf include being a standalone solution, offering one line conversions, serializable, npm installation, android compatibility, and being free and open-sourced on Github.">
+    <meta name="keywords" content="unit of measurement, programming data type, conversion library, java, javascript, c#, csharp, framework, API, unitof, one line, one liner">
+    <meta name="author" content="Adam Steinberg of Digidemic, LLC">
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="assets/frameworks/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="assets/frameworks/font-awesome/css/font-awesome.min.css">
+
+    <!-- Theme CSS -->
+    <link href="assets/css/new-age.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.min.css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="assets/frameworks/angularjs/angular.min.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="indexController" ng-init="init()" id="page-top">
+
+<nav id="mainNav" ng-model="navMain" class="navbar navbar-default navbar-fixed-top">
+    <div class="container containerPlusPlus" style="width: auto; padding-right: 30px; padding-left: 30px;">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a ng-show="topBarExists" href="#page-top"><h4 style="float:none; height: auto; line-height: 1;" class="navbar-brand margin-0 navbar-title text-shadow"><img alt="UnitOf" src="assets/img/Logo-Gray-Border.png" style="width: 72px;padding-bottom: 4px;display: inline;"/> <span><span style="font-size: 15px;"> {{setHeaderText}}</span></span></h4></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right text-shadow">
+                <li><a href="#docSection">Doc</a></li>
+                <li><a href="https://github.com/digidemic/UnitOf">Github</a></li>
+                <li><a href="https://github.com/Digidemic/UnitOf/archive/master.zip">Download</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div class="container containerPlusPlus" style="margin-top: 55px; padding-right: 0px; padding-left: 0px;">
+
+        <div class="row">
+            <div class="col-sm-12 center">
+                <h1 class="center text-shadow">
+                    <img alt="UnitOf" src="assets/img/Logo-Gray-Border.png" style="width: 230px; padding-bottom: 10px; margin-top: -20px;" ng-click="theClick()" />
+                    <br>
+                    <div style="padding-top: 3px;"></div>
+                    <span id="headerRotate"><span ng-click="uoIsTextClick()" ng-repeat="unitOfIs in uoUnitOfIs"> <b class="cursor-hand">{{unitOfIs}}</b></span></span>
+
+
+                    <div style="width: 100%;margin: 0 auto; display: flex; justify-content: center; margin-top: 10px;">
+                        <div class="cursor-hand uoIsBarStuff" ng-repeat="unitOfIs in uoUnitOfIs" ng-click="uoIsBarClick($index)" style="float: left; margin-left: 15px; padding-bottom: 1px; width: 4%;" ng-style="uoIsBarWidth($index)"></div>
+                    </div>
+
+                </h1>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-12 center">
+                <div>
+                    <label class="center demoCheckBoxColor">
+                        <input class="center" type="checkbox" ng-model="demoCheckbox" ng-click="demoCheckboxClick()">
+                        Demo Mode (Auto Rotate)
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div style="display: table; margin: auto;">
+            <div style="padding-top: 9px; padding-right: 120px; padding-left: 120px; display: inline-block; border-radius: 18px; background: rgba(0, 0, 0, 0.5);">
+                <div class="carouselTitleText carousel-meas-title-color" style="font-weight: bold;">Measurement ({{UnitOfLength()}} total)</div>
+                <div class="row">
+                    <div class="col-sm-12" style="z-index:5;">
+                        <div class="container-carousel meas-carou-height carousel-meas-from-gap">
+                            <div class="carousel-meas">
+                                <div id="itemMeas{{Uts.getDegree($index, 6)}}" class="item-meas item-bg-40" ng-click="carouselMeasClick($event.currentTarget.id)" style="{{MeasCarousel.transformToCarousel($index, uoMeasurement.length)}}" ng-repeat="obj in uoMeasurement" value="{{obj.measurement.uo}}">{{obj.measurement.text}}</div><!-- (360 / length.length) * $index+1-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="container-carousel" style="padding-top: 35px;">
+                            <div class="carouselTitleText carousel-from-title-color" style="font-weight: bold;">From ({{UnitOfMeasurementLength()}} units)</div>
+                            <div class="carousel-from" style="padding-top: 9px;">
+                                <div id="itemFrom{{Uts.getDegree($index, 6)}}" class="item-from" ng-click="carouselFromClick($event.currentTarget.id)" style="{{FromCarousel.transformToCarousel($index, 6)}}" ng-repeat="len in unitsFromMeasurementCollection(true)" value="{{len.uo}}">{{len.text}}</div><!-- (360 / length.length) * $index+1-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="container-carousel carousel-from-to-gap">
+                            <div class="carouselTitleText carousel-to-title-color" style="padding-top: 16px; font-weight: bold;">To ({{UnitOfMeasurementLength()}} units)</div>
+                            <div class="carousel-to" style="padding-top: 4px;">
+                                <div id="itemTo{{Uts.getDegree($index, 6)}}" class="item-to" ng-click="carouselToClick($event.currentTarget.id)" style="{{ToCarousel.transformToCarousel($index, 6)}}" ng-repeat="len in unitsFromMeasurementCollection()" value="{{len.uo}}">{{len.text}}</div><!-- (360 / length.length) * $index+1-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-4 top-padding-15">
+                    <div class="center code-title text-shadow">Java</div>
+                    <div class="code-background code-background-radius-top" style="position: relative;">
+                        <div class="code-left-line-number" style="padding-top:2px;">1</div>
+                        <div class="code-divider"></div>
+
+                        <div id="javaFrom" class="code-right" style="padding-bottom: 10px;">UnitOf.<span class="code-meas-color">{{Uts.pascalCase(measVal())}}</span> unit = <span style="color: #f5deb3">new</span> UnitOf.<span class="code-meas-color">{{Uts.pascalCase(measVal())}}()</span>.<span class="code-from-color">from{{fromVal()}}(<span class="code-user-input-color"> <input ng-model="userInput"  maxlength="6" class="center code-user-input-color code-user-input-style" ng-change="userInputChange()" type="number" placeholder="From Value"> </span>)</span>;</div>
+
+                        <div class="code-left-line-number">2</div>
+                        <div id="javaTo" class="code-right"><span style="color: #CFA37A;">double</span> x = unit.<span class="code-to-color">to{{toVal()}}()</span>; <span class="code-answer-color">&nbsp;//{{uoValue}}</span></div>
+                    </div>
+                    <a href="https://github.com/Digidemic/UnitOf/archive/master.zip">
+                        <div class="center item-bg-20 code-background-radius-bottom border-40">
+                            <div class="u">Download UnitOf_v1.0.0.0.jar & Examples</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-4 top-padding-15">
+                    <div class="center code-title text-shadow">JavaScript</div>
+                    <div class="code-background code-background-radius-top" style="position: relative;">
+
+                        <div class="code-left-line-number" style="padding-top:2px;">1</div>
+                        <div class="code-divider"></div>
+
+                        <div id="javaScriptFrom" class="code-right" style="padding-bottom: 10px;">var unit = UnitOf.<span class="code-meas-color">{{Uts.pascalCase(measVal())}}</span>.<span class="code-from-color">from{{fromVal()}}(<span class="code-user-input-color"> <input ng-model="userInput"  maxlength="6" class="center code-user-input-color code-user-input-style" ng-change="userInputChange()" type="number" placeholder="From Value"> </span>)</span>;</div>
+
+                        <div class="code-left-line-number">2</div>
+                        <div id="javaScriptTo" class="code-right"><span style="color: #CFA37A;">var</span> x = unit.<span class="code-to-color">to{{toVal()}}()</span>; <span class="code-answer-color">&nbsp;//{{uoValue}}</span></div>
+                    </div>
+                    <a href="https://github.com/Digidemic/UnitOf/archive/master.zip">
+                        <div class="center item-bg-20 code-background-radius-bottom border-40">
+                            <div class="u">Download UnitOf_v1.0.0.0.min.js & Examples</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-4 top-padding-15">
+                    <div class="center code-title text-shadow">C#</div>
+                    <div class="code-background code-background-radius-top" style="position: relative;">
+
+                        <div class="code-left-line-number" style="padding-top:2px;">1</div>
+                        <div class="code-divider"></div>
+
+                        <div id="csFrom" class="code-right" style="padding-bottom: 10px;">UnitOf.<span class="code-meas-color">{{Uts.pascalCase(measVal())}}</span> unit = <span style="color: #f5deb3">new</span> UnitOf.<span class="code-meas-color">{{Uts.pascalCase(measVal())}}()</span>.<span class="code-from-color">From{{fromVal()}}(<span class="code-user-input-color"> <input ng-model="userInput"  maxlength="6" class="center code-user-input-color code-user-input-style" ng-change="userInputChange()" type="number" placeholder="From Value"> </span>)</span>;</div>
+
+                        <div class="code-left-line-number">2</div>
+                        <div id="csTo" class="code-right"><span style="color: #CFA37A;">double</span> x = unit.<span class="code-to-color">To{{toVal()}}()</span>; <span class="code-answer-color">&nbsp;//{{uoValue}}</span></div>
+                    </div>
+                    <a href="https://github.com/Digidemic/UnitOf/archive/master.zip">
+                        <div class="center item-bg-20 code-background-radius-bottom border-40">
+                            <div class="u">Download UnitOf_v1.0.0.0.dll & Examples</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="page-section services inter-feature-section text-shadow" id="download">
+    <div class="container">
+        <div class="text-center wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+            <h2 style="font-weight: 900;">Easiest and Fastest Measurement & Data Type Conversion Library.</h2>
+            <h3 style="font-weight: 600; font-style: italic">- Available in Java, JavaScript, and C# -</h3>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div class="row mt-4" style="padding-top: 10px;">
+            <div ng-repeat="category in uoFeatures" class="col-lg-4 wow fadeIn" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">
+                <div class="media">
+                    <div class="pull-left">
+                        <i class="{{category.icon}} rounded-circle features-main-icons"></i>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading" style="font-weight: 900; margin-bottom: 15px;">{{category.name}}</h3>
+                        <ul style="padding: 0; list-style: inside;" ng-repeat="item in category.items">
+                            <li style="margin-bottom: 10px;">{{item.text}} <i ng-show="item.info.length > 0" title="{{item.info}}" rel="tooltip" class="fa fa-info-circle"></i></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="docSection" class="inter-doc-section text-center section-border text-shadow">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2 style="font-weight: 900;" class="text-shadow">{{UnitOfLength()}} Measurements in UnitOf</h2>
+                <h3 style="font-weight: 600; font-style: italic" class="text-shadow">- Syntax, Units Available, and Examples -</h3>
+                <br>
+                <div id="{{setDocMeasCat(-1)}}"  class="cursor-hand" ng-class-odd="'timeline'" ng-class-even="'timeline-inverted'" style="font-size: 2em; padding: 5px; border-radius: 18px;" ng-model="tlMeas[$index]" ng-click="tlMeas[-1] = toggleDocCategory(tlMeas[-1], key, value, $event)" scroll-on-click>
+                    <div style="display: flex">
+                        <div style="float: left; text-align: left; width: 33.3%;"></div>
+                        <div style="float: left; text-align: center; width: 33.3%;"><span>Quick Summary</span></div>
+                        <div style="float: left; text-align: right; width: 33.3%; padding-right: 25px;"><i ng-class="tlMeas[-1] ? 'fa fa-chevron-down' : 'fa fa-chevron-left'" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="cursor-normal" ng-click="$event.stopPropagation();">
+                        <div ng-show="tlMeas[-1]" style="margin-top: 5px;">
+                            <div style="padding-bottom: 10px; padding-top: 2px; font-size: 0.8em; margin-left: 2%; margin-right: 2%; border-bottom: 2px solid rgba(255,255,255,0.25);">
+                                In
+                                <b>
+                                    <select name="mySelect" id="mySelected" class="cursor-hand doc-input-style" data-ng-model="selectedLanguageDDL[-1]"  data-ng-change="languageSelectChange(selectedLanguageDDL[-1])">
+                                        <option class="select-option" value="java">Java</option>
+                                        <option class="select-option" value="javascript">JavaScript</option>
+                                        <option class="select-option" value="csharp">C#</option>
+                                    </select>
+                                </b>
+                            </div>
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%; ">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">One Liner</div>
+                                <div class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-left-line-number">1</div>
+                                    <div class="code-divider"></div>
+                                    <div class="code-right" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.oneLiner)"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%;">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">Set Then Convert</div>
+                                <div class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-divider"></div>
+                                    <div class="code-left-line-number">1</div>
+                                    <div class="code-right" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.setThenConvert_1)"></div>
+                                    <div class="code-left-line-number" style="margin-top: 10px;">2</div>
+                                    <div class="code-right" style="margin-top: 10px;" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.setThenConvert_2)"></div>
+                                    <div class="code-left-line-number" style="margin-top: 10px;">3</div>
+                                    <div class="code-right" style="margin-top: 10px;" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.setThenConvert_3)"></div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px; margin-top: 10px; width: 100%; ">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">Data Type and Fractions</div>
+                                <div class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-divider"></div>
+                                    <div class="code-left-line-number">1</div>
+                                    <div class="code-right" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.dataTypeAndFractions_1)"></div>
+                                    <div class="code-left-line-number" style="margin-top: 10px;">2</div>
+                                    <div class="code-right" style="margin-top: 10px;" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.dataTypeAndFractions_2)"></div>
+                                <div class="code-left-line-number" style="margin-top: 10px;">3</div>
+                                <div class="code-right" style="margin-top: 10px;" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.dataTypeAndFractions_3)"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%;">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">Create your own custom measurement</div>
+                                <div class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-divider"></div>
+                                    <div class="code-left-line-number">1</div>
+                                    <div class="code-right">
+                                        <div ng-show="selectedLanguageDDL[-1] === 'java'">UnitOf.<span class="c-class-name">Anything</span> x = <span class="c-new">new</span> UnitOf.<span class="c-class-name">Anything(</span>&quot;FEET&quot;, <span class="c-new">new </span> <span class="c-variableType">HashMap</span>&lt;<span class="c-variableType">Object</span>, <span class="c-variableType">Double</span>&gt;<span class="c-variableType">()</span> {{ <span class="c-from-function">put(</span>&quot;METERS&quot;, <span class="c-input">0.3048</span><span class="c-from-function">)</span>; <span class="c-from-function">put(</span>&quot;INCHES&quot;, <span class="c-input">12.0</span><span class="c-from-function">)</span>; }});</div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'javascript'"><span class="c-variableType">var</span> x = UnitOf.<span class="c-class-name">Anything(</span>&quot;FEET&quot;, <span class="c-input">1</span>, <span class="c-input">true</span>, <span class="c-variableType">{</span>METERS:<span class="c-input">0.3048</span>, INCHES:<span class="c-input">12</span><span class="c-variableType">}</span><span class="c-class-name">)</span>;&nbsp;<span class="c-comment">//Cust measurement w/ 3 units</span></div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'csharp'">UnitOf.<span class="c-class-name">Anything</span> x = <span class="c-new">new</span> UnitOf.<span class="c-class-name">Anything(</span>"FEET", <span class="c-new">new</span> <span class="c-variableType">Dictionary</span>&lt;<span class="c-variableType">Object</span>, <span class="c-variableType">Double</span>&gt;<span class="c-variableType">()</span>{ {"METERS", <span class="c-input">0.3048</span>}, {"INCHES", <span class="c-input">12.0</span>} });</div>
+                                    </div>
+                                    <div class="code-left-line-number" style="margin-top: 10px;">2</div>
+                                    <div class="code-right" style="margin-top: 10px;" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.createAnything_2)"></div>
+                                    <div class="code-left-line-number" style="margin-top: 10px;">3</div>
+                                    <div class="code-right" style="margin-top: 10px;" ng-bind-html="styleCodeQuickSummary(uoHardCodedExamples.createAnything_3)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div id="{{setDocMeasCat($index)}}"  class="cursor-hand" ng-class-odd="'timeline'" ng-class-even="'timeline-inverted'" style="font-size: 2em; padding: 5px;" ng-repeat="(key, value) in Uts.UnitOfJS" ng-model="tlMeas[$index]" ng-click="tlMeas[$index] = toggleDocCategory(tlMeas[$index], key, value, $event)" scroll-on-click>
+                    <div style="display: flex">
+                        <div style="float: left; text-align: left; width: 33.3%;"></div>
+                        <div style="float: left; text-align: center; width: 33.3%;"><span>{{unitOfMeasurementToVisibleText(key, $index)}}</span></div>
+                        <div style="float: left; text-align: right; width: 33.3%; padding-right: 25px;"><i ng-class="tlMeas[$index] ? 'fa fa-chevron-down' : 'fa fa-chevron-left'" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="cursor-normal" ng-click="$event.stopPropagation();">
+
+                        <!--  UnitOf.Anything() Special Documentation -->
+                        <div ng-show="tlMeas[$index]" ng-if="Uts.UnitOfJS.DataType(key).toBoolean(['anything'])">
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%; ">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">
+                                    <div>Example <i style="padding-left: 3px;" rel="tooltip" class="fa fa-info-circle" title="NOTE: THIS IS NOT A REALISTIC UnitOf.ANYTHING EXAMPLE! The example was written this way only to demonstrate the versatility and features of UnitOf.Anything(). Please see the example projects within the UnitOf zip file for better ways of implementing UnitOf.Anything()."></i></div>
+                                    <div style="padding-bottom: 10px; padding-top: 2px; font-size: 0.9em;">
+                                        In
+                                        <b>
+                                            <select class="cursor-hand doc-input-style" data-ng-model="selectedLanguageDDL[$index]" data-ng-change="languageSelectChange(selectedLanguageDDL[$index])">
+                                                <option class="select-option" value="java">Java</option>
+                                                <option class="select-option" value="javascript">JavaScript</option>
+                                                <option class="select-option" value="csharp">C#</option>
+                                            </select>
+                                        </b>
+                                        using
+                                        <b>
+                                            <select class="doc-input-style" data-ng-model="selectedExampleDDL[$index]" data-ng-change="selectedExampleStyle(selectedExampleDDL[$index])">
+                                                <option class="color-black" value="1">Add Unit Function</option>
+                                                <option class="color-black" value="2">HashMap / Dictionary / Object</option>
+                                                <option class="color-black" value="3">Array</option>
+                                            </select>
+                                        </b>
+                                        example
+                                    </div>
+                                </div>
+                                <div class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-divider-double-digits"></div>
+                                    <div class="code-left-line-number">1&nbsp;&nbsp;</div><div class="code-right"><span class="c-comment">/*</span></div>
+                                    <div class="code-left-line-number">2&nbsp;&nbsp;</div><div class="code-right"><span class="c-comment">&nbsp;Units available for our custom UnitOf measurement</span></div>
+                                    <div class="code-left-line-number">3&nbsp;&nbsp;</div><div class="code-right"><span class="c-comment">*/</span></div>
+                                    <div class="code-left-line-number">4&nbsp;&nbsp;</div><div class="code-right"><span class="c-variableType">{{javaJSOrCS('final String', 'var', 'const String')}}</span><span> FEET = </span><span class="c-input">{{selectedExampleDDL[$index] === '3' ? '1' : '"FEET"'}}</span>; <span class="c-comment">{{selectedExampleDDL[$index] === '3' ? '//Unit name "Feet" with value of 1 also for key' : '//Unit name "Feet" as String.'}}</span></div>
+                                    <div class="code-left-line-number">5&nbsp;&nbsp;</div><div class="code-right"><span class="c-variableType">{{javaJSOrCS('final String', 'var', 'const String')}}</span><span> METERS = </span><span class="c-input">{{selectedExampleDDL[$index] === '3' ? '0.3048' : '"Meters"'}}</span>; <span class="c-comment">{{selectedExampleDDL[$index] === '3' ? '//Unit name/value: 0.3048 Meters in 1 foot.' : '//Unit name "Meters" as String.'}}</span></div>
+                                    <div class="code-left-line-number">6&nbsp;&nbsp;</div><div class="code-right"><span class="c-variableType">{{javaJSOrCS('final double', 'var', 'const double')}}</span><span> INCHES = </span><span class="c-input">12</span>; <span class="c-comment">{{selectedExampleDDL[$index] === '3' ? '//Unit name/value: 12 inches in 1 foot' : '//Unit name can also be the key conversion value (12 inches in 1 foot).'}}</span></div>
+                                    <div class="code-left-line-number">7&nbsp;&nbsp;</div><div class="code-right"><span>&nbsp;</span></div>
+                                    <div class="code-left-line-number">8&nbsp;&nbsp;</div><div class="code-right"><span class="c-comment">/*</span></div>
+                                    <div class="code-left-line-number">9&nbsp;&nbsp;</div><div class="code-right"><span class="c-comment">&nbsp;Create our custom UnitOf measurement and add the units with their values.</span></div>
+                                    <div class="code-left-line-number">10</div><div class="code-right"><span class="c-comment">&nbsp;The values are defined by how many units it takes to equal one key unit.</span></div>
+                                    <div class="code-left-line-number">11</div><div class="code-right"><span class="c-comment">&nbsp;Key = 1 foot | values = 12 inches (12 inches in 1 foot), 0.3048 meters (0.3048 meters in 1 foot)</span></div>
+                                    <div class="code-left-line-number">12</div><div class="code-right"><span class="c-comment">*/</span></div>
+                                    <div ng-show="selectedExampleDDL[$index] === '1'">
+                                        <div class="code-left-line-number">13</div><div class="code-right"><span class="c-variableType">{{isJS('var','')}}</span><span>{{bJS('UnitOf.')}}</span><span class="c-class-name">{{bJS('Anything')}}</span> length = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">Anything(</span>FEET<span class="c-class-name">)</span>; <span class="c-comment">//Our key is 1 foot. All added units are their conversion into 1 foot.</span></div>
+                                        <div class="code-left-line-number">14</div><div class="code-right"><span>length.</span><span class="c-from-function">{{langCasing('addUnit')}}(</span>METERS, <span class="c-input">0.3048</span><span class="c-from-function">)</span>; <span class="c-comment">//Unit name/value: 0.3048 Meters in 1 foot.</span></div>
+                                        <div class="code-left-line-number">15</div><div class="code-right"><span>length.</span><span class="c-from-function">{{langCasing('addUnit')}}(</span>INCHES<span class="c-from-function">)</span>; <span class="c-comment">//Unit name/value: 12 inches in 1 foot.</span></div>
+                                    </div>
+                                    <div ng-show="selectedExampleDDL[$index] === '2'">
+                                        <div class="code-left-line-number">13</div><div class="code-right"><span class="c-variableType">{{isJS('var','')}}</span><span>{{bJS('UnitOf.')}}</span><span class="c-class-name">{{bJS('Anything')}}</span> length = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">Anything(</span>FEET, <span class="c-input">1</span>, <span class="c-input">true</span>, <span class="c-new">new </span> <span class="c-variableType">{{javaJSOrCS('HashMap', '', 'Dictionary')}}</span>&lt;<span class="c-variableType">Object</span>, <span class="c-variableType">Double</span>&gt;<span class="c-variableType">() </span><span>{{javaJSOrCS('{', '', '')}}{</span></div>
+                                        <div class="code-left-line-number">14</div><div class="code-right">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-from-function">{{javaJSOrCS('put(', '', '')}}</span>{{javaJSOrCS('', '', '{')}}METERS: <span class="c-input">0.3048</span><span class="c-from-function">{{javaJSOrCS(')','','')}}</span>{{javaJSOrCS(';',',','}, {')}}<span class="c-from-function">{{javaJSOrCS(' put(', ' ', '')}}</span>INCHES: INCHES<span class="c-from-function">{{javaJSOrCS(')','','')}}</span>{{javaJSOrCS('','','}')}}</div>
+                                        <!--<div class="code-left-line-number">14</div><div class="code-right">&nbsp;&nbsp;&nbsp;&nbsp;<span>{{javaJSOrCS('put(METERS: 0.3048);  put(INCHES: INCHES);', 'METERS: 0.3048,  INCHES: INCHES', '{METERS: 0.3048},  {put(INCHES: INCHES}')}}</span></div>-->
+                                        <div class="code-left-line-number">15</div><div class="code-right"><span>}{{javaJSOrCS('}','','')}}</span><span class="c-class-name">)</span>;</div>
+                                    </div>
+                                    <div ng-show="selectedExampleDDL[$index] === '3'">
+                                        <div class="code-left-line-number">13</div><div class="code-right"><span class="c-variableType">{{isJS('var','')}}</span><span>{{bJS('UnitOf.')}}</span><span class="c-class-name">{{bJS('Anything')}}</span> length = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">Anything(</span>FEET, {{isJS('[','')}}<span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{bJS('double')}}</span>{{bJS('[]{')}}</div>
+                                        <div class="code-left-line-number">14</div><div class="code-right">&nbsp;&nbsp;&nbsp;&nbsp;<span>METERS, INCHES</span></div>
+                                        <div class="code-left-line-number">15</div><div class="code-right"><span>{{isJS(']','}')}}</span><span class="c-class-name">)</span>;</div>
+                                    </div>
+                                    <div class="code-left-line-number">16</div><div class="code-right"><span>&nbsp;</span></div>
+                                    <div class="code-left-line-number">17</div><div class="code-right"><span class="c-comment">/*</span></div>
+                                    <div class="code-left-line-number">18</div><div class="code-right"><span class="c-comment">&nbsp;One line conversions</span></div>
+                                    <div class="code-left-line-number">19</div><div class="code-right"><span class="c-comment">&nbsp;No "from" value set yet but can still perform one line conversions by passing in the "from" unit and value as well as the "to" unit.</span></div>
+                                    <div class="code-left-line-number">20</div><div class="code-right"><span class="c-comment">*/</span></div>
+                                    <div class="code-left-line-number">21</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span><span> from12d5_FeetToMeters = length.</span><span class="c-to-function">{{langCasing('convertNow')}}(</span><span class="c-input">12.5</span>, FEET, METERS<span class="c-to-function">)</span>; <span class="c-comment">//Returns 3.81 as 12.5 feet to meters = 3.81 meters</span></div>
+                                    <div class="code-left-line-number">22</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span><span> from12d5_FeetToInches = length.</span><span class="c-to-function">{{langCasing('convertNow')}}(</span><span class="c-input">12.5</span>, FEET, INCHES<span class="c-to-function">)</span>; <span class="c-comment">//Returns 150 as 12.5 feet to inches = 150 inches</span></div>
+                                    <div class="code-left-line-number">23</div><div class="code-right"><span>&nbsp;</span></div>
+                                    <div class="code-left-line-number">24</div><div class="code-right"><span class="c-comment">/*</span></div>
+                                    <div class="code-left-line-number">25</div><div class="code-right"><span class="c-comment">&nbsp;Setting then converting</span></div>
+                                    <div class="code-left-line-number">26</div><div class="code-right"><span class="c-comment">&nbsp;The custom UnitOf measurement can define a "from" unit/value so to allow it to be converted more than once.</span></div>
+                                    <div class="code-left-line-number">27</div><div class="code-right"><span class="c-comment">*/</span></div>
+                                    <div class="code-left-line-number">28</div><div class="code-right"><span>length.</span><span class="c-from-function">{{langCasing('from')}}(</span>METERS, <span class="c-input">5</span><span class="c-from-function">)</span>; <span class="c-comment">//Set the length to 5 Meters</span></div>
+                                    <div class="code-left-line-number">29</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span> from5_MetersToFeet = length.<span class="c-to-function">{{langCasing('to')}}(</span>FEET<span class="c-to-function">)</span>; <span class="c-comment">//Returns 16.404 as 5 meters to feet = ~16.404 feet</span></div>
+                                    <div class="code-left-line-number">30</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span> from5_MetersToInches = length.<span class="c-to-function">{{langCasing('to')}}(</span>INCHES<span class="c-to-function">)</span>; <span class="c-comment">//Returns 196.85 as 5 meters to inches = ~196.85 inches</span></div>
+                                    <div class="code-left-line-number">31</div><div class="code-right"><span>&nbsp;</span></div>
+                                    <div class="code-left-line-number">32</div><div class="code-right"><span class="c-comment">/*</span></div>
+                                    <div class="code-left-line-number">33</div><div class="code-right"><span class="c-comment">&nbsp;Returns the currently set values</span></div>
+                                    <div class="code-left-line-number">34</div><div class="code-right"><span class="c-comment">*/</span></div>
+                                    <div class="code-left-line-number">35</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span><span> keyName = length.</span><span class="c-to-function">{{langCasing('getKeyName')}}()</span>; <span class="c-comment">//Returns "Feet"</span></div>
+                                    <div class="code-left-line-number">36</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span><span> keyValue = length.</span><span class="c-to-function">{{langCasing('getKeyValue')}}()</span>; <span class="c-comment">//Returns 1</span></div>
+                                    <div class="code-left-line-number">37</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span><span> fromName = length.</span><span class="c-to-function">{{langCasing('getFromName')}}()</span>; <span class="c-comment">//Returns "Meters"</span></div>
+                                    <div class="code-left-line-number">38</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span><span> fromValue = length.</span><span class="c-to-function">{{langCasing('getFromValue')}}()</span>; <span class="c-comment">//Returns 5</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--  UnitOf.DataType() Special Documentation -->
+                        <div ng-show="tlMeas[$index]" ng-if="Uts.UnitOfJS.DataType(key).toBoolean(['datatype'])">
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%; ">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">
+                                    <div>Example <i style="padding-left: 3px;" rel="tooltip" class="fa fa-info-circle" title="Please see the example projects within the UnitOf zip file for more examples of UnitOf.DataType()."></i></div>
+                                    <div style="padding-bottom: 10px; padding-top: 2px; font-size: 0.9em;">
+                                        In
+                                        <b>
+                                            <select class="cursor-hand doc-input-style" data-ng-model="selectedLanguageDDL[$index]" data-ng-change="languageSelectChange(selectedLanguageDDL[$index])">
+                                                <option class="select-option" value="java">Java</option>
+                                                <option class="select-option" value="javascript">JavaScript</option>
+                                                <option class="select-option" value="csharp">C#</option>
+                                            </select>
+                                        </b>
+                                        using
+                                        <b>
+                                            <select class="doc-input-style" data-ng-model="dataTypeSelectedExample">
+                                                <option class="color-black" value="1">One Liner</option>
+                                                <option class="color-black" value="2">Set Then Convert</option>
+                                                <option class="color-black" value="3">Boolean Extended Syntax</option>
+                                                <option class="color-black" value="4">Fraction Extended Syntax</option>
+                                            </select>
+                                        </b>
+                                        example
+                                    </div>
+                                </div>
+                                <div class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-divider-double-digits"></div>
+
+                                    <div ng-show="dataTypeSelectedExample === '1' || dataTypeSelectedExample === '2'" class="c-comment">
+                                        <div class="code-left-line-number">1</div><div class="code-right">/**</div>
+                                        <div class="code-left-line-number">2</div><div class="code-right">* Convert any {{javaJSOrCS('Java','JavaScript','C#')}} data type and more including converting to and from fractions.</div>
+                                        <div class="code-left-line-number">3</div><div class="code-right">*</div>
+                                        <div class="code-left-line-number">4</div><div class="code-right">* Default Values:</div>
+                                        <div class="code-left-line-number">5</div><div class="code-right">*</div>
+                                        <div class="code-left-line-number">6</div><div class="code-right">* When a conversion in DataType fails its default, passed by caller as a parameter or if not uses UnitOf's defaults, is returned.</div>
+                                        <div class="code-left-line-number">{{dtcTop}}</div><div class="code-right">* UnitOf defaults (when no parameter is passed) for each method are as follows:</div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'java' || selectedLanguageDDL[-1] === 'csharp'">
+                                            <div class="code-left-line-number">{{dtcTop + 1}}</div><div class="code-right">* toObject(): null</div>
+                                            <div class="code-left-line-number">{{dtcTop + 2}}</div><div class="code-right">* toString(): ""</div>
+                                            <div class="code-left-line-number">{{dtcTop + 3}}</div><div class="code-right">* toBoolean(): false</div>
+                                            <div class="code-left-line-number">{{dtcTop + 4}}</div><div class="code-right">* toChar(): '\u0000'</div>
+                                            <div class="code-left-line-number">{{dtcTop + 5}}</div><div class="code-right">* toByte(): (byte)0</div>
+                                            <div class="code-left-line-number">{{dtcTop + 6}}</div><div class="code-right">* toShort(): (short)0</div>
+                                            <div class="code-left-line-number">{{dtcTop + 7}}</div><div class="code-right">* toInt(): 0</div>
+                                            <div class="code-left-line-number">{{dtcTop + 8}}</div><div class="code-right">* toLong(): (long)0</div>
+                                            <div class="code-left-line-number">{{dtcTop + 9}}</div><div class="code-right">* toFloat(): 0.0f</div>
+                                            <div class="code-left-line-number">{{dtcTop + 10}}</div><div class="code-right">* toDouble(): 0.0d</div>
+                                            <div class="code-left-line-number">{{dtcJava}}</div><div class="code-right">* toFraction(): ""</div>
+                                        </div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'csharp'">
+                                            <div class="code-left-line-number">{{dtcJava + 1}}</div><div class="code-right">* toSbyte(): 0</div>
+                                            <div class="code-left-line-number">{{dtcJava + 2}}</div><div class="code-right">* toUint(): 0</div>
+                                            <div class="code-left-line-number">{{dtcJava + 3}}</div><div class="code-right">* toUlong: 0</div>
+                                            <div class="code-left-line-number">{{dtcJava + 4}}</div><div class="code-right">* toUshort: 0</div>
+                                            <div class="code-left-line-number">{{dtcJava + 5}}</div><div class="code-right">* toDecimal(): 0.0M</div>
+                                            <div class="code-left-line-number">{{dtcJava + 6}}</div><div class="code-right">* toDateTime(): new DateTime()</div>
+                                            <div class="code-left-line-number">{{dtcJava + 7}}</div><div class="code-right">* toTimeSpan(): new TimeSpan()</div>
+                                        </div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'javascript'">
+                                            <div class="code-left-line-number">{{dtcTop + 1}}</div><div class="code-right">* toString(): ""</div>
+                                            <div class="code-left-line-number">{{dtcTop + 2}}</div><div class="code-right">* toBoolean(): false</div>
+                                            <div class="code-left-line-number">{{dtcTop + 3}}</div><div class="code-right">* toNumber(): 0</div>
+                                            <div class="code-left-line-number">{{dtcTop + 4}}</div><div class="code-right">* toChar(): ""</div>
+                                            <div class="code-left-line-number">{{dtcTop + 5}}</div><div class="code-right">* toInt(): 0</div>
+                                            <div class="code-left-line-number">{{dtcTop + 6}}</div><div class="code-right">* toFloat(): 0</div>
+                                            <div class="code-left-line-number">{{dtcJS}}</div><div class="code-right">* toFraction(): ""</div>
+                                        </div>
+                                        <div class="code-left-line-number">{{dtLN(dtcJava + 1, dtcJS + 1, dtcCS + 1)}}</div><div class="code-right">*</div>
+                                        <div class="code-left-line-number">{{dtLN(dtcJava + 2, dtcJS + 2, dtcCS + 2)}}</div><div class="code-right">* NOTE: {{javaJSOrCS('','','toSbyte, toShort, toUint, toUlong, toUshort, ')}}{{isJS('toNumber, toInt, and toFloat','toByte, toInt, toLong, toFloat, and toDouble')}} {{isJS('functions','methods')}} on failure will attempt to read the value as a fraction and convert it to a decimal form.</div>
+                                        <div class="code-left-line-number">{{dtLN(dtcJava + 3, dtcJS + 3, dtcCS + 3)}}</div><div class="code-right">* This is to account for fractions originally passed in as Strings to be converted as a number type (EX: "2/4" {{isJS('toFloat()','toDouble()')}} will return 0.5).</div>
+                                        <div class="code-left-line-number">{{dtLN(dtcJava + 4, dtcJS + 4, dtcCS + 4)}}</div><div class="code-right">*/</div>
+                                    </div>
+
+                                    <div ng-show="dataTypeSelectedExample === '1'">
+                                        <div class="code-left-line-number">{{dtLine + 1}}</div><div class="code-right"><span>&nbsp;</span></div>
+                                        <div class="code-left-line-number">{{dtLine + 2}}</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> typePassed = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">1.23</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('getTypeConstantPassed()')}}</span>; <span class="c-comment">//Returns "{{isJS('number','Double')}}"</span></div>
+                                        <div class="code-left-line-number">{{dtLine + 3}}</div><div class="code-right"><span class="c-variableType">{{isJS('var','Object')}}</span> valuePassed = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">1.23</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('getValuePassed()')}}</span>; <span class="c-comment">//Returns 1.23</span></div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'java' || selectedLanguageDDL[-1] === 'csharp'">
+                                            <div class="code-left-line-number">{{dtLine + 4}}</div><div class="code-right"><span class="c-variableType">double</span> xToDouble = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"12.5"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oDouble()</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 5}}</div><div class="code-right"><span class="c-variableType">int</span> xToInt = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oInt(</span><span class="c-input">7</span><span class="c-to-function">)</span>; <span class="c-comment">//12.5 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 6}}</div><div class="code-right"><span class="c-variableType">double</span> xToFloat = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">true</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oFloat(</span><span class="c-input">7.0f</span><span class="c-to-function">)</span>; <span class="c-comment">//true -> 7.0</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 7}}</div><div class="code-right"><span class="c-variableType">String</span> xToString = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">true</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oString(</span><span class="c-input">"If Failed"</span><span class="c-to-function">)</span>; <span class="c-comment">//"true" -> true</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 8}}</div><div class="code-right"><span class="c-variableType">boolean</span> xToBoolean = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"TrUe"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oBoolean()</span>; <span class="c-comment">//"TrUe" -> true</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 9}}</div><div class="code-right"><span class="c-variableType">boolean</span> xExistsInCollection = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"12.5"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oBoolean(</span><span class="c-new">new </span> <span class="c-variableType">Integer[]{</span><span class="c-input">5</span>,<span class="c-input">12</span>,<span class="c-input">3</span><span class="c-variableType">}</span>,<span class="c-input">false</span>,<span class="c-input">true</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> true</span> <i style="padding-left: 3px;" rel="tooltip" class="fa fa-info-circle" title='More information in drop down "Boolean Extended Syntax"'></i></div>
+                                            <div class="code-left-line-number">{{dtLine + 10}}</div><div class="code-right"><span class="c-variableType">String</span> xToFraction = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oFraction()</span>; <span class="c-comment">//12.5 -> "25/2"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 11}}</div><div class="code-right"><span class="c-variableType">String</span> xToReducedFrac = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"2/4"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oFraction()</span>; <span class="c-comment">//"2/4" -> "1/2"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 12}}</div><div class="code-right"><span class="c-variableType">double</span> fracToDouble = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"2/4"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oDouble()</span>; <span class="c-comment">//"2/4" -> 0.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 13}}</div><div class="code-right"><span class="c-variableType">char</span> xToChar = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oChar(</span><span class="c-input">'@'</span><span class="c-to-function">)</span>; <span class="c-comment">//12.5 -> '1'</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 14}}</div><div class="code-right"><span class="c-variableType">Object</span> xToObject = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"12.5"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oObject()</span>; <span class="c-comment">//"12.5" -> "12.5"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 15}}</div><div class="code-right"><span class="c-variableType">byte</span> xToByte = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oByte(</span>(<span class="c-variableType">byte</span>)<span class="c-input">7</span><span class="c-to-function">)</span>; <span class="c-comment">//12.5 -> 12.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 16}}</div><div class="code-right"><span class="c-variableType">short</span> xToShort = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oShort()</span>; <span class="c-comment">//12 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 17}}</div><div class="code-right"><span class="c-variableType">long</span> xToLong = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('t')}}oLong()</span>; <span class="c-comment">//12 -> 12</span></div>
+                                        </div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'csharp'">
+                                            <div class="code-left-line-number">{{dtLine + 18}}</div><div class="code-right"><span class="c-variableType">sbyte</span> xToSbyte = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">ToSbyte()</span>; <span class="c-comment">//12.5 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 19}}</div><div class="code-right"><span class="c-variableType">uint</span> xToUint = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">ToUint(</span>(<span class="c-variableType">uint</span>)<span class="c-input">7</span><span class="c-to-function">)</span>; <span class="c-comment">//12.5 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 20}}</div><div class="code-right"><span class="c-variableType">ulong</span> xToUlong = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12</span><span class="c-class-name">)</span>.<span class="c-to-function">ToUlong()</span>; <span class="c-comment">//12 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 21}}</div><div class="code-right"><span class="c-variableType">ushort</span> xToUshort = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12</span><span class="c-class-name">)</span>.<span class="c-to-function">ToUshort()</span>; <span class="c-comment">//12 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 22}}</div><div class="code-right"><span class="c-variableType">decimal</span> xToDecimal = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12</span><span class="c-class-name">)</span>.<span class="c-to-function">ToDecimal(</span><span class="c-input">7M</span><span class="c-to-function">)</span>; <span class="c-comment">//12 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 23}}</div><div class="code-right"><span class="c-variableType">DateTime</span> xToDateTime = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"5/2"</span><span class="c-class-name">)</span>.<span class="c-to-function">ToDateTime()</span>; <span class="c-comment">//"5/2/2018 12:00:00 AM"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 24}}</div><div class="code-right"><span class="c-variableType">TimeSpan</span> xToTimeSpan = <span class="c-new">new</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">ToTimeSpan(</span><span class="c-variableType">TimeSpan.FromMinutes(</span><span class="c-input">2</span><span class="c-variableType">)</span><span class="c-to-function">)</span>; <span class="c-comment">//"00:02:00"</span></div>
+                                        </div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'javascript'">
+                                            <div class="code-left-line-number">{{dtLine + 4}}</div><div class="code-right"><span class="c-variableType">var</span> xToFloat = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"12.5"</span><span class="c-class-name">)</span>.<span class="c-to-function">toFloat()</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 5}}</div><div class="code-right"><span class="c-variableType">var</span> xToInt = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">toInt(</span><span class="c-input">7</span><span class="c-to-function">)</span>; <span class="c-comment">//12.5 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 6}}</div><div class="code-right"><span class="c-variableType">var</span> xToString = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12</span><span class="c-class-name">)</span>.<span class="c-to-function">toString()</span>; <span class="c-comment">//12 -> "12"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 7}}</div><div class="code-right"><span class="c-variableType">var</span> xToBoolean = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"TrUe"</span><span class="c-class-name">)</span>.<span class="c-to-function">toBoolean()</span>; <span class="c-comment">//"TrUe" -> true</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 8}}</div><div class="code-right"><span class="c-variableType">var</span> xExistsInCollection = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"12.5"</span><span class="c-class-name">)</span>.<span class="c-to-function">toBoolean(</span><span class="c-variableType">[</span><span class="c-input">5</span>,<span class="c-input">12</span>,<span class="c-input">3</span><span class="c-variableType">]</span>,<span class="c-input">false</span>,<span class="c-input">true</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> true</span>  <i style="padding-left: 3px;" rel="tooltip" class="fa fa-info-circle" title='More information in drop down "Boolean Extended Syntax"'></i></div>
+                                            <div class="code-left-line-number">{{dtLine + 9}}</div><div class="code-right"><span class="c-variableType">var</span> xToFraction = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">toFraction()</span>; <span class="c-comment">//12.5 -> "25/2"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 10}}</div><div class="code-right"><span class="c-variableType">var</span> xToReducedFrac = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"2/4"</span><span class="c-class-name">)</span>.<span class="c-to-function">toFraction()</span>; <span class="c-comment">//"2/4" -> "1/2"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 11}}</div><div class="code-right"><span class="c-variableType">var</span> fracToDouble = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"2/4"</span><span class="c-class-name">)</span>.<span class="c-to-function">toFloat()</span>; <span class="c-comment">//"2/4" -> 0.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 12}}</div><div class="code-right"><span class="c-variableType">var</span> xToChar = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">toChar(</span><span class="c-input">'@'</span><span class="c-to-function">)</span>; <span class="c-comment">//12.5 -> '1'</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 13}}</div><div class="code-right"><span class="c-variableType">var</span> xToNumber = UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">12.5</span><span class="c-class-name">)</span>.<span class="c-to-function">toNumber(</span><span class="c-input">7.0</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="dataTypeSelectedExample === '2'">
+                                        <div class="code-left-line-number">{{dtLine + 1}}</div><div class="code-right"><span>&nbsp;</span></div>
+                                        <div class="code-left-line-number">{{dtLine + 2}}</div><div class="code-right">{{bJS('UnitOf.')}}<span class="c-class-name">{{bJS('DataType')}}</span><span class="c-variableType">{{isJS('var','')}}</span> x = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"12.5"</span><span class="c-class-name">)</span>; <span class="c-comment">//String passed in</span></div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'java' || selectedLanguageDDL[-1] === 'csharp'">
+                                            <div class="code-left-line-number">{{dtLine + 3}}</div><div class="code-right"><span class="c-variableType">double</span> xToDouble = x.<span class="c-to-function">{{langCasing('t')}}oDouble()</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 4}}</div><div class="code-right"><span class="c-variableType">int</span> xToInt = x.<span class="c-to-function">{{langCasing('t')}}oInt(</span><span class="c-input">7</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 5}}</div><div class="code-right"><span class="c-variableType">double</span> xToFloat = x.<span class="c-to-function">{{langCasing('t')}}oFloat(</span><span class="c-input">7.0f</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 6}}</div><div class="code-right"><span class="c-variableType">String</span> xToString = x.<span class="c-to-function">{{langCasing('t')}}oString(</span><span class="c-input">"If Failed"</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> "12.5"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 7}}</div><div class="code-right"><span class="c-variableType">boolean</span> xToBoolean = x.<span class="c-to-function">{{langCasing('t')}}oBoolean()</span>; <span class="c-comment">//"12.5" -> false</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 8}}</div><div class="code-right"><span class="c-variableType">boolean</span> xExistsInCollection = x.<span class="c-to-function">{{langCasing('t')}}oBoolean(</span><span class="c-new">new </span> <span class="c-variableType">Integer[]{</span><span class="c-input">5</span>, <span class="c-input">12</span>, <span class="c-input">3</span><span class="c-variableType">}</span>, <span class="c-input">false</span>, <span class="c-input">true</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> true</span> <i style="padding-left: 3px;" rel="tooltip" class="fa fa-info-circle" title='More information in drop down "Boolean Extended Syntax"'></i></div>
+                                            <div class="code-left-line-number">{{dtLine + 9}}</div><div class="code-right"><span class="c-variableType">String</span> xToFraction = x.<span class="c-to-function">{{langCasing('t')}}oFraction()</span>; <span class="c-comment">//12.5 -> "25/2"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 10}}</div><div class="code-right"><span class="c-variableType">char</span> xToChar = x.<span class="c-to-function">{{langCasing('t')}}oChar(</span><span class="c-input">'@'</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> '1'</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 11}}</div><div class="code-right"><span class="c-variableType">Object</span> xToObject = x.<span class="c-to-function">{{langCasing('t')}}oObject()</span>; <span class="c-comment">//"12.5" -> "12.5"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 12}}</div><div class="code-right"><span class="c-variableType">byte</span> xToByte = x.<span class="c-to-function">{{langCasing('t')}}oByte(</span>(<span class="c-variableType">byte</span>)<span class="c-input">7</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 13}}</div><div class="code-right"><span class="c-variableType">short</span> xToShort = x.<span class="c-to-function">{{langCasing('t')}}oShort()</span>; <span class="c-comment">//"12.5" -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 14}}</div><div class="code-right"><span class="c-variableType">long</span> xToLong = x.<span class="c-to-function">{{langCasing('t')}}oLong()</span>; <span class="c-comment">//"12.5" -> 12</span></div>
+                                        </div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'csharp'">
+                                            <div class="code-left-line-number">{{dtLine + 15}}</div><div class="code-right"><span class="c-variableType">sbyte</span> xToSbyte = x.<span class="c-to-function">ToSbyte()</span>; <span class="c-comment">//"12.5" -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 16}}</div><div class="code-right"><span class="c-variableType">uint</span> xToUint = x.<span class="c-to-function">ToUint(</span>(<span class="c-variableType">uint</span>)<span class="c-input">7</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 17}}</div><div class="code-right"><span class="c-variableType">ulong</span> xToUlong = x.<span class="c-to-function">ToUlong()</span>; <span class="c-comment">//"12.5" -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 18}}</div><div class="code-right"><span class="c-variableType">ushort</span> xToUshort = x.<span class="c-to-function">ToUshort()</span>; <span class="c-comment">//"12.5" -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 19}}</div><div class="code-right"><span class="c-variableType">decimal</span> xToDecimal = x.<span class="c-to-function">ToDecimal(</span><span class="c-input">7M</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 20}}</div><div class="code-right"><span class="c-variableType">DateTime</span> xToDateTime = x.<span class="c-to-function">ToDateTime()</span>; <span class="c-comment">//"12/5/2018 12:00:00 AM"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 21}}</div><div class="code-right"><span class="c-variableType">TimeSpan</span> xToTimeSpan = x.<span class="c-to-function">ToTimeSpan(</span><span class="c-variableType">TimeSpan.FromMinutes(</span><span class="c-input">2</span><span class="c-variableType">)</span><span class="c-to-function">)</span>; <span class="c-comment">//"00:02:00"</span></div>
+                                        </div>
+                                        <div ng-show="selectedLanguageDDL[-1] === 'javascript'">
+                                            <div class="code-left-line-number">{{dtLine + 3}}</div><div class="code-right"><span class="c-variableType">var</span> xToFloat = x.<span class="c-to-function">toFloat()</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 4}}</div><div class="code-right"><span class="c-variableType">var</span> xToInt = x.<span class="c-to-function">toInt(</span><span class="c-input">7</span><span class="c-to-function">)</span>; <span class="c-comment">//12.5 -> 12</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 5}}</div><div class="code-right"><span class="c-variableType">var</span> xToString = x.<span class="c-to-function">toString()</span>; <span class="c-comment">//12 -> "12"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 6}}</div><div class="code-right"><span class="c-variableType">var</span> xToBoolean = x.<span class="c-to-function">toBoolean()</span>; <span class="c-comment">//"TrUe" -> true</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 7}}</div><div class="code-right"><span class="c-variableType">var</span> xExistsInCollection = x.<span class="c-to-function">toBoolean(</span><span class="c-variableType">[</span><span class="c-input">5</span>, <span class="c-input">12</span>, <span class="c-input">3</span><span class="c-variableType">]</span>, <span class="c-input">false</span>, <span class="c-input">true</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> true</span> <i style="padding-left: 3px;" rel="tooltip" class="fa fa-info-circle" title='More information in drop down "Boolean Extended Syntax"'></i></div>
+                                            <div class="code-left-line-number">{{dtLine + 8}}</div><div class="code-right"><span class="c-variableType">var</span> xToFraction = x.<span class="c-to-function">toFraction()</span>; <span class="c-comment">//12.5 -> "25/2"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 9}}</div><div class="code-right"><span class="c-variableType">var</span> xToReducedFrac = x.<span class="c-to-function">toFraction()</span>; <span class="c-comment">//"2/4" -> "1/2"</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 10}}</div><div class="code-right"><span class="c-variableType">var</span> fracToDouble = x.<span class="c-to-function">toFloat()</span>; <span class="c-comment">//"2/4" -> 0.5</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 11}}</div><div class="code-right"><span class="c-variableType">var</span> xToChar = x.<span class="c-to-function">toChar(</span><span class="c-input">'@'</span><span class="c-to-function">)</span>; <span class="c-comment">//12.5 -> '1'</span></div>
+                                            <div class="code-left-line-number">{{dtLine + 12}}</div><div class="code-right"><span class="c-variableType">var</span> xToNumber = x.<span class="c-to-function">toNumber(</span><span class="c-input">7.0</span><span class="c-to-function">)</span>; <span class="c-comment">//"12.5" -> 12.5</span></div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="dataTypeSelectedExample === '3'">
+                                        <div class="c-comment">
+                                            <div class="code-left-line-number">1&nbsp;&nbsp;</div><div class="code-right">/**</div>
+                                            <div class="code-left-line-number">2&nbsp;&nbsp;</div><div class="code-right">* Normal Syntax (Simple):</div>
+                                            <div class="code-left-line-number">3&nbsp;&nbsp;</div><div class="code-right">*</div>
+                                            <div class="code-left-line-number">4&nbsp;&nbsp;</div><div class="code-right">*   Simply parse the value passed.</div>
+                                            <div class="code-left-line-number">5&nbsp;&nbsp;</div><div class="code-right">*   An optional single parameter of the default value of true or false can be passed.</div>
+                                            <div class="code-left-line-number">6&nbsp;&nbsp;</div><div class="code-right">*   Examples:</div>
+                                            <div class="code-left-line-number">7&nbsp;&nbsp;</div><div class="code-right">*   {{bJS('new')}} UnitOf.DataType("true").{{langCasing('toBoolean()')}};        //Returns true</div>
+                                            <div class="code-left-line-number">8&nbsp;&nbsp;</div><div class="code-right">*   {{bJS('new')}} UnitOf.DataType("Invalid").{{langCasing('toBoolean()')}};     //Returns false</div>
+                                            <div class="code-left-line-number">9&nbsp;&nbsp;</div><div class="code-right">*   {{bJS('new')}} UnitOf.DataType("Invalid").{{langCasing('toBoolean(true)')}}; //Returns true</div>
+                                            <div class="code-left-line-number">10</div><div class="code-right">*</div>
+                                            <div class="code-left-line-number">11</div><div class="code-right">*-=-=-=-=-=-=-=-=-=-=-=-</div>
+                                            <div class="code-left-line-number">12</div><div class="code-right">*</div>
+                                            <div class="code-left-line-number">13</div><div class="code-right">* Extended Syntax (Complex):</div>
+                                            <div class="code-left-line-number">14</div><div class="code-right">*</div>
+                                            <div class="code-left-line-number">15</div><div class="code-right">*   Rather than just converting the passed value to true or false as the "Normal Syntax (Simple)" does,</div>
+                                            <div class="code-left-line-number">16</div><div class="code-right">*   {{langCasing('toBoolean')}} can compare the passed value against a collection of other Objects to find if there match, even of different data types.</div>
+                                            <div class="code-left-line-number">17</div><div class="code-right">*   When a match exists between the passed object and the passed collection, true is returned. otherwise it is false.</div>
+                                            <div class="code-left-line-number">18</div><div class="code-right">*   Constraints can be strengthened or loosened by enforcing case sensitivity or matching by containing only part of the value passed.</div>
+                                            <div class="code-left-line-number">19</div><div class="code-right">*</div>
+                                            <div class="code-left-line-number">20</div><div class="code-right">*   UnitOf.{{langCasing('toBoolean()')}} allows passing in a collection of values where is the variable equals any one of them true will be returned.</div>
+                                            <div class="code-left-line-number">21</div><div class="code-right">*   This can be combined with the other 2 parameters, caseSensitive and contains.</div>
+                                            <div class="code-left-line-number">22</div><div class="code-right">*   caseSensitive being the UnitOf.DataType variable must match the casing of collection to return true.</div>
+                                            <div class="code-left-line-number">23</div><div class="code-right">*   EX: caseSensitive = true,   "UnitOf" & "unitof" = false</div>
+                                            <div class="code-left-line-number">24</div><div class="code-right">*       caseSensitive = false,  "UnitOf" & "unitof" = true</div>
+                                            <div class="code-left-line-number">25</div><div class="code-right">*   contains being the collection passed has an element with a sequence of characters that are contains in the UnitOf.DataType variable.</div>
+                                            <div class="code-left-line-number">26</div><div class="code-right">*   EX: contains = true,    "UnitOf" & "Unit" = true</div>
+                                            <div class="code-left-line-number">27</div><div class="code-right">*       contains = false,   "UnitOf" & "tOf" = false</div>
+                                            <div class="code-left-line-number">28</div><div class="code-right">*   These can be combined something like the following will return true: "uNiTOF" = "UNIt"</div>
+                                            <div class="code-left-line-number">29</div><div class="code-right">*/</div>
+                                        </div>
+                                        <div class="code-left-line-number">30</div><div class="code-right"><span class="c-comment">&nbsp;</span></div>
+                                        <div class="code-left-line-number">31</div><div class="code-right"><span class="c-comment">&nbsp;</span></div>
+                                        <div class="c-comment">
+                                            <div class="code-left-line-number">32</div><div class="code-right">/*</div>
+                                            <div class="code-left-line-number">33</div><div class="code-right">value used for the next 6 examples</div>
+                                            <div class="code-left-line-number">34</div><div class="code-right">*/</div>
+                                        </div>
+                                        <div class="code-left-line-number">35</div><div class="code-right">{{isJS('','UnitOf.')}}<span class="c-class-name">{{isJS('','DataType')}}</span><span class="c-variableType">{{isJS('var','')}}</span> x = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"12.5"</span><span class="c-class-name">)</span>;</div>
+                                        <div class="code-left-line-number">36</div><div class="code-right"><span class="c-comment">&nbsp;</span></div>
+                                        <div class="code-left-line-number">37</div><div class="code-right c-comment">//Returns true for all</div>
+                                        <div class="code-left-line-number">38</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> t1 = x.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{bJS('String[]')}}{{isJS('[','{')}}</span><span class="c-input">"1.2"</span>, <span class="c-input">"12.5"</span>, <span class="c-input">"3"</span><span class="c-variableType">{{isJS(']','}')}}</span><span class="c-to-function">)</span>; <span class="c-comment">//True, matches "12.5"</span></div>
+                                        <div class="code-left-line-number">39</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> t2 = x.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{javaJSOrCS('Float[]','','Object[]')}}{{isJS('[','{')}}</span><span class="c-input">1.2f</span>, <span class="c-input">12.5f</span>, <span class="c-input">3f</span><span class="c-variableType">{{isJS(']','}')}}</span><span class="c-to-function">)</span>; <span class="c-comment">//True, matches 12.5</span></div>
+                                        <div class="code-left-line-number">40</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> t3 = x.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{javaJSOrCS('Integer[]','','Object[]')}}{{isJS('[','{')}}</span><span class="c-input">5</span>, <span class="c-input">12</span>, <span class="c-input">3</span><span class="c-variableType">{{isJS(']','}')}}</span>, <span class="c-input">false</span>, <span class="c-input">true</span><span class="c-to-function">)</span>; <span class="c-comment">//True, matches 5 & 12</span></div>
+                                        <div class="code-left-line-number">41</div><div class="code-right"><span class="c-comment">&nbsp;</span></div>
+                                        <div class="code-left-line-number">42</div><div class="code-right c-comment">//Returns false for all</div>
+                                        <div class="code-left-line-number">43</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> f1 = x.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{bJS('String[]')}}{{isJS('[','{')}}</span><span class="c-input">"1.2"</span>, <span class="c-input">"12.55"</span>, <span class="c-input">"3"</span><span class="c-variableType">{{isJS(']','}')}}</span><span class="c-to-function">)</span>; <span class="c-comment">//False, No matches</span></div>
+                                        <div class="code-left-line-number">44</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> f2 = x.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{javaJSOrCS('Float[]','','Object[]')}}{{isJS('[','{')}}</span><span class="c-input">1.2f</span>, <span class="c-input">12.55f</span>, <span class="c-input">3f</span><span class="c-variableType">{{isJS(']','}')}}</span><span class="c-to-function">)</span>; <span class="c-comment">//False, No matches</span></div>
+                                        <div class="code-left-line-number">45</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> f3 = x.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{javaJSOrCS('Integer[]','','Object[]')}}{{isJS('[','{')}}</span><span class="c-input">5</span>, <span class="c-input">12</span>, <span class="c-input">3</span><span class="c-variableType">{{isJS(']','}')}}</span>, <span class="c-input">false</span>, <span class="c-input">false</span><span class="c-to-function">)</span>; <span class="c-comment">//False, No matches</span></div>
+                                        <div class="code-left-line-number">46</div><div class="code-right"><span class="c-comment">&nbsp;</span></div>
+                                        <div class="c-comment">
+                                            <div class="code-left-line-number">47</div><div class="code-right">/*</div>
+                                            <div class="code-left-line-number">48</div><div class="code-right">One line String examples</div>
+                                            <div class="code-left-line-number">49</div><div class="code-right">*/</div>
+                                        </div>
+                                        <div class="code-left-line-number">50</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> noCasingAndContains = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"UnitOf"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{bJS('String[]')}}{{isJS('[','{')}}</span><span class="c-input">"Unit"</span>, <span class="c-input">"unitof"</span>, <span class="c-input">"ThisIsUnitOf"</span><span class="c-variableType">{{isJS(']','}')}}</span>, <span class="c-input">true</span>, <span class="c-input">true</span><span class="c-to-function">)</span>; <span class="c-comment">//Returns true due to "Unit"</span></div>
+                                        <div class="code-left-line-number">51</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> contains = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"UnitOf"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{bJS('String[]')}}{{isJS('[','{')}}</span><span class="c-input">"Unit"</span>, <span class="c-input">"unitof"</span>, <span class="c-input">"ThisIsUnitOf"</span><span class="c-variableType">{{isJS(']','}')}}</span>,<span class="c-input">false</span>, <span class="c-input">true</span><span class="c-to-function">)</span>; <span class="c-comment">//Returns true: "Unit", "unitof"</span></div>
+                                        <div class="code-left-line-number">52</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> equals = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"UnitOf"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{bJS('String[]')}}{{isJS('[','{')}}</span><span class="c-input">"Unit"</span>, <span class="c-input">"unitof</span>", <span class="c-input">"ThisIsUnitOf"</span><span class="c-variableType">{{isJS(']','}')}}</span><span class="c-to-function">)</span>; <span class="c-comment">//Returns true. only "unitof"</span></div>
+                                        <div class="code-left-line-number">53</div><div class="code-right"><span class="c-variableType">{{isJS('var','boolean')}}</span> noCasingAndEquals = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"UnitOf"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toBoolean(')}}</span><span class="c-new">{{bJS('new ')}}</span><span class="c-variableType">{{bJS('String[]')}}{{isJS('[','{')}}</span><span class="c-input">"Unit"</span>, <span class="c-input">"unitof"</span>, <span class="c-input">"ThisIsUnitOf"</span><span class="c-variableType">{{isJS(']','}')}}</span>, <span class="c-input">true</span><span class="c-to-function">)</span>; <span class="c-comment">//Returns false, no matches</span></div>
+                                    </div>
+                                    <div ng-show="dataTypeSelectedExample === '4'">
+                                        <div class="code-left-line-number">1</div><div class="code-right"><span class="c-comment">/*</span></div>
+                                        <div class="code-left-line-number">2</div><div class="code-right"><span class="c-comment">Decimal to fraction</span></div>
+                                        <div class="code-left-line-number">3</div><div class="code-right"><span class="c-comment">Convert whole numbers, decimals, and numbers in strings to fraction equivalent.</span></div>
+                                        <div class="code-left-line-number">4</div><div class="code-right"><span class="c-comment">*/</span></div>
+                                        <div class="code-left-line-number">5</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> x1 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">.5</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toFraction()')}}</span>; <span class="c-comment">//Returns "1/2"</span></div>
+                                        <div class="code-left-line-number">6</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> x2 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">.75</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toFraction()')}}</span>; <span class="c-comment">//Returns "3/4"</span></div>
+                                        <div class="code-left-line-number">7</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> x3 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"Invalid"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toFraction(')}}<span class="c-input">"2/3"</span><span class="c-to-function">)</span></span>; <span class="c-comment">//Cannot create a fraction from this, default "2/3" is returned</span></div>
+                                        <div class="code-left-line-number">8</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> x4 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"-2"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toFraction()')}}</span>; <span class="c-comment">//Returns "-2" or "-2/1"</span></div>
+                                        <div class="code-left-line-number">9</div><div class="code-right"><span class="c-comment">&nbsp;</span></div>
+                                        <div class="code-left-line-number">10</div><div class="code-right"><span class="c-comment">/*</span></div>
+                                        <div class="code-left-line-number">11</div><div class="code-right"><span class="c-comment">Fraction to Decimal</span></div>
+                                        <div class="code-left-line-number">12</div><div class="code-right"><span class="c-comment">Convert the following fractions to their decimal ({{isJS('float','double')}}) equivalent.</span></div>
+                                        <div class="code-left-line-number">13</div><div class="code-right"><span class="c-comment">*/</span></div>
+                                        <div class="code-left-line-number">14</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span> y1 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"2/4"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{javaJSOrCS('toDouble()','toFloat()','ToDouble()')}}</span>; <span class="c-comment">//Returns 0.5</span></div>
+                                        <div class="code-left-line-number">15</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span> y2 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"Invalid"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{javaJSOrCS('toDouble(','toFloat(','ToDouble(')}}</span><span class="c-input">0.25</span><span class="c-to-function">)</span></span>; <span class="c-comment">//Cannot create a fraction from this, default 0.25 is returned</span></div>
+                                        <div class="code-left-line-number">16</div><div class="code-right"><span class="c-variableType">{{isJS('var','double')}}</span> y3 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"4/2"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{javaJSOrCS('toDouble()','toFloat()','ToDouble()')}}</span>; <span class="c-comment">//Returns 2</span></div>
+                                        <div class="code-left-line-number">17</div><div class="code-right">&nbsp;</div>
+                                        <div class="code-left-line-number">18</div><div class="code-right"><span class="c-comment">/*</span></div>
+                                        <div class="code-left-line-number">19</div><div class="code-right"><span class="c-comment">Simplify the following existing fractions.</span></div>
+                                        <div class="code-left-line-number">20</div><div class="code-right"><span class="c-comment">*/</span></div>
+                                        <div class="code-left-line-number">21</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> z1 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"2/4"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toFraction()')}}</span>; <span class="c-comment">//Returns "1/2"</span></div>
+                                        <div class="code-left-line-number">22</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> z2 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"4/2"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toFraction()')}}</span>; <span class="c-comment">//Returns "2" or "2/1"</span></div>
+                                        <div class="code-left-line-number">23</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> z3 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"2/5"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toFraction()')}}</span>; <span class="c-comment">//Returns "2/5", cant get any simpler</span></div>
+                                        <div class="code-left-line-number">24</div><div class="code-right"><span class="c-variableType">{{isJS('var','String')}}</span> z4 = <span class="c-new">{{bJS('new')}}</span> UnitOf.<span class="c-class-name">DataType(</span><span class="c-input">"Invalid"</span><span class="c-class-name">)</span>.<span class="c-to-function">{{langCasing('toFraction(')}}<span class="c-input">"1/2"</span><span class="c-to-function">)</span></span>; <span class="c-comment">//Cannot create a fraction from this, default "1/2" is returned</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--  UnitOf.NumericBase() Special Documentation -->
+                        <div ng-show="tlMeas[$index]" ng-if="Uts.UnitOfJS.DataType(key).toBoolean(['numericbase'])">
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%; ">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">
+                                    <div>Syntax</div>
+                                    <div style="padding-bottom: 10px; padding-top: 2px; font-size: 0.9em;">
+                                        In
+                                        <b>
+                                            <select class="cursor-hand doc-input-style" data-ng-model="selectedLanguageDDL[$index]" data-ng-change="languageSelectChange(selectedLanguageDDL[$index])">
+                                                <option class="select-option" value="java">Java</option>
+                                                <option class="select-option" value="javascript">JavaScript</option>
+                                                <option class="select-option" value="csharp">C#</option>
+                                            </select>
+                                        </b>
+                                        using
+                                        <b>
+                                            <select class="doc-input-style" data-ng-model="selectedExampleDDL[$index]" data-ng-change="selectedExampleStyle(selectedExampleDDL[$index])">
+                                                <option class="color-black" value="1">One Liner</option>
+                                                <option class="color-black" value="2">Set Then Convert</option>
+                                                <option class="color-black" value="3">Instantiate, Set, Then Convert</option>
+                                            </select>
+                                        </b>
+                                        example
+                                    </div>
+                                    <div ng-show="selectedLanguageDDL[$index] === 'javascript'" style="font-size: 12px;">
+                                        * NOTE: For NumericBase to work in JavaScript, a reference to a BigInterger library MUST be made.
+                                        The following was used in developing/testing UnitOf and is recommended:
+                                        <a href="https://peterolson.github.io/BigInteger.js/BigInteger.min.js">https://peterolson.github.io/BigInteger.js/BigInteger.min.js</a>
+                                    </div>
+                                </div>
+                                <div ng-show="selectedLanguageDDL[$index] === 'csharp'">
+                                    <div class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                        UnitOf.NumericBase currently unsupported in C#. More info here: <i style="padding-left: 3px;" rel="tooltip" class="fa fa-info-circle" title="Obsessing over backwards compatibility, .NET 4.0 began providing implementation with BigInt out of the box (Which is needed for UnitOf.NumbericBase to work). Currently, UnitOf supports .NET 2.0 and up and did not make sense for us to bump this to .NET 4.0 for this sole reason. This may be added in future UnitOf updates but at this time the measurement is unavailable."></i>
+                                    </div>
+                                </div>
+                                <div ng-show="selectedLanguageDDL[$index] !== 'csharp'">
+                                    <div ng-show="selectedExampleDDL[$index] === '1'" class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                        <div class="code-divider"></div>
+                                        <div class="code-left-line-number c-linebreak-small">1</div><div class="code-right c-linebreak-small"><span class="c-variableType">try</span> {</div>
+                                        <div class="code-left-line-number c-linebreak-small">2</div><div class="code-right c-linebreak-small">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#CFA37A">{{isJS('var','String')}} </span>x = <span style="color:#f5deb3">{{bJS('new')}} </span>UnitOf.<span style="color:#CD797B">{{key}}{{bJS('()')}}</span><span class="code-gap-readjust"> .</span><span style="color:#4C797F">{{langCasing(docFromCode)}}(</span><span class="code-user-input-color"><input style="width:100px;" ng-model="theNumericBaseUserInput" class="center code-user-input-style" value="3439"></span><span style="color:#4C797F">)</span><span class="code-gap-readjust"> .</span><span style="color:#66A863">{{langCasing(docToCode)}}{{bJS('()')}}</span>;&nbsp;<span style="color:rgba(181, 181, 181, 0.55)"> //{{convertMe(theNumericBaseUserInput, key, docFromCode, docToCode)}}</span></div>
+                                        <div class="code-left-line-number c-linebreak-small">3</div><div class="code-right c-linebreak-small">} <span class="c-variableType">catch</span> ({{bJS('Exception ')}}e) {</div>
+                                        <div class="code-left-line-number c-linebreak-small">4</div><div class="code-right c-linebreak-small">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-comment">//Handle exception: all NumericBase conversion "To" are throwable. This is due to many conversions having letters passed in that may not apply to other base units. Exceptions caught in this example will be displayed as N/A in the comment above.</span></div>
+                                        <div class="code-left-line-number c-linebreak-small">5</div><div class="code-right c-linebreak-small">}</div>
+                                    </div>
+
+                                    <div ng-show="selectedExampleDDL[$index] === '2'" class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                        <div class="code-divider"></div>
+                                        <div class="code-left-line-number c-linebreak-small">1</div><div class="code-right c-linebreak-small"><span class="c-variableType">try</span> {</div>
+                                        <div class="code-left-line-number c-linebreak-small">2</div><div class="code-right c-linebreak-small"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#CFA37A">{{isJS('var','')}}</span>{{bJS('UnitOf.')}}<span style="color:#CD797B">{{bJS( key)}} </span>unit = <span style="color:#f5deb3">{{bJS('new')}} </span>UnitOf.<span style="color:#CD797B">{{key}}{{bJS('()')}}</span><span class="code-gap-readjust"> .</span><span style="color:#4C797F">{{langCasing(docFromCode)}}(</span><span class="code-user-input-color"><input style="width:100px;" ng-model="theNumericBaseUserInput" class="center code-user-input-style" value="3439"></span><span style="color:#4C797F">);</span></span></div>
+                                        <div class="code-left-line-number c-linebreak-small">3</div><div class="code-right c-linebreak-small"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#CFA37A">{{isJS('var','String')}} </span>x = unit<span class="code-gap-readjust"> .</span><span style="color:#66A863">{{langCasing(docToCode)}}{{bJS('()')}}</span>;&nbsp;<span style="color:rgba(181, 181, 181, 0.55)"> //{{convertMe(theNumericBaseUserInput, key, docFromCode, docToCode)}}</span></span></div>
+                                        <div class="code-left-line-number c-linebreak-small">4</div><div class="code-right c-linebreak-small">} <span class="c-variableType">catch</span> ({{bJS('Exception ')}}e) {</div>
+                                        <div class="code-left-line-number c-linebreak-small">5</div><div class="code-right c-linebreak-small">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-comment">//Handle exception: all NumericBase conversion "To" are throwable. This is due to many conversions having letters passed in that may not apply to other base units. Exceptions caught in this example will be displayed as N/A in the comment above.</span></div>
+                                        <div class="code-left-line-number c-linebreak-small">6</div><div class="code-right c-linebreak-small">}</div>
+                                    </div>
+
+                                    <div ng-show="selectedExampleDDL[$index] === '3'" class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                        <div class="code-divider"></div>
+                                        <div class="code-left-line-number c-linebreak-small">1</div><div class="code-right c-linebreak-small"><span class="c-variableType">try</span> {</div>
+                                        <div class="code-left-line-number c-linebreak-small">2</div><div class="code-right c-linebreak-small">&nbsp;&nbsp;&nbsp;&nbsp;<span><span>{{isJS('var','')}}</span>{{bJS('UnitOf.')}}<span style="color:#CD797B">{{bJS( key)}} </span>unit = <span style="color:#f5deb3">{{bJS('new')}} </span>UnitOf.<span style="color:#CD797B">{{key}}{{bJS('()')}}</span><span>;</span></span></div>
+                                        <div class="code-left-line-number c-linebreak-small">3</div><div class="code-right c-linebreak-small">&nbsp;&nbsp;&nbsp;&nbsp;<span>unit = unit<span class="code-gap-readjust"> .</span><span style="color:#4C797F">{{langCasing(docFromCode)}}(</span><span class="code-user-input-color"><input style="width:100px;" ng-model="theNumericBaseUserInput" class="center code-user-input-style" value="3439"></span><span style="color:#4C797F">);</span></span></div>
+                                        <div class="code-left-line-number c-linebreak-small">4</div><div class="code-right c-linebreak-small">&nbsp;&nbsp;&nbsp;&nbsp;<span><span style="color:#CFA37A">{{isJS('var','String')}} </span>x = unit<span class="code-gap-readjust"> .</span><span style="color:#66A863">{{langCasing(docToCode)}}{{bJS('()')}}</span>;&nbsp;<span style="color:rgba(181, 181, 181, 0.55)"> //{{convertMe(theNumericBaseUserInput, key, docFromCode, docToCode)}}</span></span></div>
+                                        <div class="code-left-line-number c-linebreak-small">5</div><div class="code-right c-linebreak-small">} <span class="c-variableType">catch</span> ({{bJS('Exception ')}}e) {</div>
+                                        <div class="code-left-line-number c-linebreak-small">6</div><div class="code-right c-linebreak-small">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-comment">//Handle exception: all NumericBase conversion "To" are throwable. This is due to many conversions having letters passed in that may not apply to other base units. Exceptions caught in this example will be displayed as N/A in the comment above.</span></div>
+                                        <div class="code-left-line-number c-linebreak-small">7</div><div class="code-right c-linebreak-small">}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%; ">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">Units Available</div>
+                                <div class="code-background" style="border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; text-shadow: none;">
+                                    <table id="tableIDsd" style="display: inline-block;">
+                                        <thead>
+                                        <tr style="border-bottom: 3px solid rgba(181, 181, 181, 0.55);">
+                                            <th class="center code-from-color" style="font-size: 27px; padding: 10px; padding-right: 15px;">
+                                                From
+                                                <div style="font-size: 10px;">
+                                                    (Initial Value and Unit Type)
+                                                </div>
+                                            </th>
+                                            <th class="center code-to-color" style="font-size: 27px; padding: 10px; padding-left: 15px;">
+                                                To
+                                                <div style="font-size: 10px;">
+                                                    (Convert into)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="(k, v) in value">
+                                            <td style="border-right: 3px solid rgba(181, 181, 181, 0.55); padding: 3px; font-size: 1.1em; padding-right: 15px;" class="cursor-hand"  ng-model="tlMeasClassFrom[$index]" ng-class="tlMeasClassFrom[$index] ? 'code-from-color' : 'doc-from-unclicked'" ng-click="tlMeasClassFrom[$index] = tableFromCellClick(k, tlMeasClassFrom[$index])">{{k.replace('from','')}}</td>
+                                            <td style="padding: 3px; font-size: 1.1em; padding-left: 15px;" class="cursor-hand" ng-model="tlMeasClassTo[$index]" ng-class="tlMeasClassTo[$index] ? 'code-to-color' : 'doc-to-unclicked'" ng-click="tlMeasClassTo[$index] = tableToCellClick(k.replace('from','to'), tlMeasClassTo[$index])">{{k.replace("from","")}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Measurements that are not Anything() NumericBase or DataType -->
+                        <div ng-show="tlMeas[$index]" ng-if="!(Uts.UnitOfJS.DataType(key).toBoolean(['anything','numericbase','datatype']))">
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%; ">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">
+                                    <div>Syntax</div>
+                                    <div style="padding-bottom: 10px; padding-top: 2px; font-size: 0.9em;">
+                                        In
+                                        <b>
+                                            <select class="cursor-hand doc-input-style" data-ng-model="selectedLanguageDDL[$index]" data-ng-change="languageSelectChange(selectedLanguageDDL[$index])">
+                                                <option class="select-option" value="java">Java</option>
+                                                <option class="select-option" value="javascript">JavaScript</option>
+                                                <option class="select-option" value="csharp">C#</option>
+                                            </select>
+                                        </b>
+                                        using
+                                        <b>
+                                            <select class="doc-input-style" data-ng-model="selectedExampleDDL[$index]" data-ng-change="selectedExampleStyle(selectedExampleDDL[$index])">
+                                                <option class="color-black" value="1">One Liner</option>
+                                                <option class="color-black" value="2">Set Then Convert</option>
+                                                <option class="color-black" value="3">Instantiate, Set, Then Convert</option>
+                                            </select>
+                                        </b>
+                                        example
+                                    </div>
+                                </div>
+                                <div ng-show="selectedExampleDDL[$index] === '1'" class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-divider"></div>
+                                    <div class="code-left-line-number" style="padding-top: 2px;">1</div>
+
+                                    <div class="code-right "><span style="color:#CFA37A">{{isJS('var','double')}} </span>x = <span style="color:#f5deb3">{{bJS('new')}} </span>UnitOf.<span style="color:#CD797B">{{key}}{{bJS('()')}}</span><span class="code-gap-readjust"> .</span><span style="color:#4C797F">{{langCasing(docFromCode)}}(</span><span class="code-user-input-color"><input ng-model="theUserInput" maxlength="3" class="center code-user-input-style" type="number" value="10"></span><span style="color:#4C797F">)</span><span class="code-gap-readjust"> .</span><span style="color:#66A863">{{langCasing(docToCode)}}{{bJS('()')}}</span>;&nbsp;<span style="color:rgba(181, 181, 181, 0.55)"> //{{convertMe(theUserInput, key, docFromCode, docToCode)}}</span></div>
+                                </div>
+                                <div ng-show="selectedExampleDDL[$index] === '2'" class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-divider"></div>
+                                    <div class="code-left-line-number" style="padding-top: 2px;">1</div>
+                                    <div class="code-right ">
+                                        <span><span style="color:#CFA37A">{{isJS('var','')}}</span>{{bJS('UnitOf.')}}<span style="color:#CD797B">{{bJS( key)}} </span>unit = <span style="color:#f5deb3">{{bJS('new')}} </span>UnitOf.<span style="color:#CD797B">{{key}}{{bJS('()')}}</span><span class="code-gap-readjust"> .</span><span style="color:#4C797F">{{langCasing(docFromCode)}}(</span><span class="code-user-input-color"><input ng-model="theUserInput" maxlength="3" class="center code-user-input-style" type="number" value="10"></span><span style="color:#4C797F">);</span></span>
+                                    </div>
+                                    <div class="code-left-line-number" style="margin-top: 10px;">2</div>
+                                    <div class="code-right" style="margin-top: 10px;">
+                                        <span><span style="color:#CFA37A">{{isJS('var','double')}} </span>x = unit<span class="code-gap-readjust"> .</span><span style="color:#66A863">{{langCasing(docToCode)}}{{bJS('()')}}</span>;&nbsp;<span style="color:rgba(181, 181, 181, 0.55)"> //{{convertMe(theUserInput, key, docFromCode, docToCode)}}</span></span>
+                                    </div>
+                                </div>
+                                <div ng-show="selectedExampleDDL[$index] === '3'" class="code-background" style="padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; position: relative; text-shadow: none;">
+                                    <div class="code-divider"></div>
+                                    <div class="code-left-line-number">1</div>
+                                    <div class="code-right ">
+                                        <span><span style="color:#CFA37A">{{isJS('var','')}}</span>{{bJS('UnitOf.')}}<span style="color:#CD797B">{{bJS( key)}} </span>unit = <span style="color:#f5deb3">{{bJS('new')}} </span>UnitOf.<span style="color:#CD797B">{{key}}{{bJS('()')}}</span><span>;</span></span>
+                                    </div>
+                                    <div class="code-left-line-number" style="margin-top: 12px;">2</div>
+                                    <div class="code-right" style="margin-top: 10px;">
+                                        <span>unit = unit<span class="code-gap-readjust"> .</span><span style="color:#4C797F">{{langCasing(docFromCode)}}(</span><span class="code-user-input-color"><input ng-model="theUserInput" maxlength="3" class="center code-user-input-style" type="number" value="10"></span><span style="color:#4C797F">);</span></span>
+                                    </div>
+                                    <div class="code-left-line-number" style="margin-top: 10px;">3</div>
+                                    <div class="code-right" style="margin-top: 10px;">
+                                        <span><span style="color:#CFA37A">{{isJS('var','double')}} </span>x = unit<span class="code-gap-readjust"> .</span><span style="color:#66A863">{{langCasing(docToCode)}}{{bJS('()')}}</span>;&nbsp;<span style="color:rgba(181, 181, 181, 0.55)"> //{{convertMe(theUserInput, key, docFromCode, docToCode)}}</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="doc-back-border-no-bg" style="font-size: 14px;padding: 9px;margin-top: 10px; width: 100%; ">
+                                <div style="font-size: 1.5em; padding-bottom: 5px; padding-top: 5px; border-top-right-radius: 8px; border-top-left-radius: 8px; font-weight: bold; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.5);">Units Available</div>
+                                <div class="code-background" style="border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; text-shadow: none;">
+                                    <table id="tableIDsd" style="display: inline-block;">
+                                        <thead>
+                                        <tr style="border-bottom: 3px solid rgba(181, 181, 181, 0.55);">
+                                            <th class="center code-from-color" style="font-size: 27px; padding: 10px; padding-right: 15px;">
+                                                From
+                                                <div style="font-size: 10px;">
+                                                    (Initial Value and Unit Type)
+                                                </div>
+                                            </th>
+                                            <th class="center code-to-color" style="font-size: 27px; padding: 10px; padding-left: 15px;">
+                                                To
+                                                <div style="font-size: 10px;">
+                                                    (Convert into)
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="(k, v) in value">
+                                            <td style="border-right: 3px solid rgba(181, 181, 181, 0.55); padding: 3px; font-size: 1.1em; padding-right: 15px;" class="cursor-hand"  ng-model="tlMeasClassFrom[$index]" ng-class="tlMeasClassFrom[$index] ? 'code-from-color' : 'doc-from-unclicked'" ng-click="tlMeasClassFrom[$index] = tableFromCellClick(k, tlMeasClassFrom[$index])">{{k.replace('from','')}}</td>
+                                            <td style="padding: 3px; font-size: 1.1em; padding-left: 15px;" class="cursor-hand" ng-model="tlMeasClassTo[$index]" ng-class="tlMeasClassTo[$index] ? 'code-to-color' : 'doc-to-unclicked'" ng-click="tlMeasClassTo[$index] = tableToCellClick(k.replace('from','to'), tlMeasClassTo[$index])">{{k.replace("from","")}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="math" class="contact bg-primary inter-math-section section-border section-resize text-shadow">
+    <div class="container">
+        <div class="row">
+            <div class="text-center wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+                <h2 style="font-weight: 900;">Palindrome Conversion Algorithm</h2>
+                <h3 style="font-weight: 600; font-style: italic" class="text-shadow">- How UnitOf converts under the hood -</h3>
+                <br>
+                <br>
+                <div class="text-shadow">Behind the scenes, UnitOf is using an in-house developed conversion algorithm, which we believe is the most efficient way to convert units of measurement.</div>
+                <div class="text-shadow">Simply put, almost all conversions are achieved using the defined list of units of the measurement which have all been pre-converted from or into a key unit of the same measurement.
+                    More complex conversions like temperature use a set of equations and the inverse functions of those same equations that convert from/into the key unit rather than using a pre-converted list of units.
+                    When a conversion is executed, its "from" unit/value and "to" unit are plugged into the this pre-converted list of units (or equations in some cases) which then use basic arithmetic to return a conversion.
+                    <br><br>In other words, a combination of 2 unique equations are used:
+                    The first equation to convert the starting unit/value into the chosen key unit of the same measurement.
+                    The second equation to convert this newly converted number into the destination unit.
+                    This is all found by knowing how to convert all units into a single chosen (key) unit.
+                </div>
+                <br>
+                <br>
+                <a href="assets/img/PCADiagram.png" style="position: relative; text-align: center;">
+                    <img alt="Palindrome Conversion Algorithm summary" class="row zoomImg" style="width:40%;" src="assets/img/PCADiagram.png"/>
+                    <div style="
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        font-size: 25px;
+                        color: #dede2e;
+                        transform: translate(-50%,-50%);
+                        -webkit-transform: translate(-50%,-50%);
+                        -ms-transform: translate(-50%,-50%);
+                        -o-transform: translate(-50%,-50%);
+                    " class="text-shadow zoomImgText">Hover to zoom | Click to open in separate page</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="faqSection" class="faq-section text-center section-border text-shadow">
+    <div class="container">
+        <h3 class="u text-shadow"><i style="padding-right:10px; color: rgb(43,76,111);" class="fa fa-question-circle fa-lg"></i><b>Frequently Asked Questions</b></h3>
+        <div class="row">
+            <div class="col-sm-12" ng-repeat="value in faqRowCount(uoFAQ) track by $index">
+                <br>
+                <br>
+                <div style="padding-left: 31px; text-align: left;" class="col-sm-4" data-ng-repeat="faq in uoFAQ | limitTo: 3 : ((($index + 1) * 3)-3)">
+                    <div>
+                        <i style="position: absolute; display: block; top: 6px; left: 0; color: rgb(43,76,111);" class="{{faq.icon}} fa-lg text-shadow"></i>
+                        <span style="font-size: 1em; text-transform: uppercase; text-align: left;">{{faq.question}}</span>
+                    </div>
+                    <br>
+                    <div style="margin-left: -31px;">
+                        <span style="font-size: 0.9em;">{{faq.answer}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>Copyright &copy; 2018 DIGIDEMIC, LLC</p>
+        <p>Developed by Adam Steinberg of DIGIDEMIC, LLC</p>
+        <p>digidemic@gmail.com</p>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="assets/frameworks/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="assets/frameworks/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>-->
+
+<!-- Theme JavaScript -->
+<script src="assets/frameworks/newage/new-age.min.js"></script>
+
+<script src="config/module.js"></script>
+<script src="index.js"></script>
+<script src="shared/rotaterator.js"></script>
+<script src="shared/zoom.js"></script>
+<script src="shared/tooltip.js"></script>
+<script src="partials/services/uts.js"></script>
+<script src="partials/factories/uoCodeStyle.js"></script>
+<script src="partials/factories/uoHardCodedExamples.js"></script>
+<script src="partials/factories/uoMeasurements.js"></script>
+<script src="partials/factories/uoDoc.js"></script>
+<script src="partials/factories/uoUnitOfIs.js"></script>
+<script src="partials/factories/uoFAQ.js"></script>
+<script src="partials/factories/uoFeatures.js"></script>
+<script src="partials/services/measCarousel.js"></script>
+<script src="partials/services/fromCarousel.js"></script>
+<script src="partials/services/toCarousel.js"></script>
+<script src="assets/frameworks/BigInteger/BigInteger.min.js"></script>
+<script src="assets/frameworks/UnitOf/UnitOf.min.js"></script>
+
+</body>
+
+</html>

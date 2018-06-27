@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11CB77FD-2FFC-416F-BF07-C983415BF35B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnitOfExamples</RootNamespace>
+    <AssemblyName>UnitOfExamples</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnitOf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\UnitOf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Examples\Anything_Class\CompileTime\ArrayUnits\OnlyOneLiners.cs" />
+    <Compile Include="Examples\Anything_Class\CompileTime\ArrayUnits\OnlyOneLiners_ShorterCode.cs" />
+    <Compile Include="Examples\Anything_Class\CompileTime\ArrayUnits\PredefinedMethods.cs" />
+    <Compile Include="Examples\Anything_Class\CompileTime\ArrayUnits\PublicUnits.cs" />
+    <Compile Include="Examples\Anything_Class\CompileTime\DictionaryUnits\OnlyOneLiners.cs" />
+    <Compile Include="Examples\Anything_Class\CompileTime\DictionaryUnits\PredefinedMethods.cs" />
+    <Compile Include="Examples\Anything_Class\CompileTime\DictionaryUnits\PublicUnits.cs" />
+    <Compile Include="Examples\Anything_Class\Main_Example_RunTime.cs" />
+    <Compile Include="Examples\Basic_Syntax.cs" />
+    <Compile Include="Examples\DataType_Class\Basic_1_Line_Conversions.cs" />
+    <Compile Include="Examples\DataType_Class\Basic_2_Step_Conversions.cs" />
+    <Compile Include="Examples\DataType_Class\Boolean_Extended_Syntax.cs" />
+    <Compile Include="Examples\DataType_Class\Fraction_Extended_Syntax.cs" />
+    <Compile Include="Examples\Index.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
