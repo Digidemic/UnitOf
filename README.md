@@ -92,6 +92,12 @@ npm install unitof
 ```
 
 ### C#
+##### By NuGet Package Manager
+```
+Install-Package UnitOf -Version 1.0.0
+```
+
+##### By manual .dll import
 >1) Import `/UnitOf.dll` from the cloned repo into your project.
 >2) In your index class or any class needed, add `using UnitOf;` to your list of imports.
 - ##### Import using Visual Studio 2012
