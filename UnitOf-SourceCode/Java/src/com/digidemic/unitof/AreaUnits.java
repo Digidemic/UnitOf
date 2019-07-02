@@ -26,7 +26,7 @@ package com.digidemic.unitof;
 /**
  * Area Units
  *
- * All unit values are conversions of FrequencyUnits (Square Meter) at the value of 1 converted into each unit.
+ * All unit values are conversions of M (Square Meter) at the value of 1 converted into each unit.
  */
 public enum AreaUnits {
     AC(1/4046.8564224),     //Acre

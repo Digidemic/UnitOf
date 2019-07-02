@@ -26,7 +26,7 @@ package com.digidemic.unitof;
 /**
  * Length Units
  *
- * All unit values are conversions of FrequencyUnits (Meter) at the value of 1 converted into each unit.
+ * All unit values are conversions of M (Meter) at the value of 1 converted into each unit.
  */
 public enum LengthUnits {
     A(1e10),                    //Angstrom

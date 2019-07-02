@@ -26,7 +26,7 @@ package com.digidemic.unitof;
 /**
  * Volume Units
  *
- * All unit values are conversions of FrequencyUnits (Cubic Meter) at the value of 1 converted into each unit.
+ * All unit values are conversions of M (Cubic Meter) at the value of 1 converted into each unit.
  */
 public enum VolumeUnits {
     ACFTUS(0.0008107083295205), //Acre Foot (US)
