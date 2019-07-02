@@ -34,7 +34,7 @@ public final class Utils implements Serializable {
     }
 
     /**
-     * All conversions use the following method to multiply or divide depending on how the measurement'store units are defined (See Enums).
+     * All conversions use the following method to multiply or divide depending on how the measurement's units are defined (See Enums).
      */
     public static double divideOrMultiply(double n, double d, boolean isMultiplication) {
         return (isMultiplication) ? n * d : n / d;

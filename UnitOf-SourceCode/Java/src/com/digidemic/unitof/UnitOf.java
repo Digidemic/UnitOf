@@ -630,7 +630,7 @@ public class UnitOf implements Serializable {
         }
 
         /**
-         * Adds or updates a Unit'store Name with its associated Value in relation to the Key to the collection of Units.
+         * Adds or updates a Unit's Name with its associated Value in relation to the Key to the collection of Units.
          * @param nameAndValue Unit Value for the Unit Name in relation to the Key. Unit Name here is also the value.
          */
         public final void addUnit(double nameAndValue) {
@@ -638,7 +638,7 @@ public class UnitOf implements Serializable {
         }
 
         /**
-         * Adds or updates a Unit'store Name with its associated Value in relation to the Key to the collection of Units.
+         * Adds or updates a Unit's Name with its associated Value in relation to the Key to the collection of Units.
          * @param name Unit Name
          * @param val Unit Value for the Unit Name in relation to the Key
          */
@@ -652,7 +652,7 @@ public class UnitOf implements Serializable {
         }
 
         /**
-         * Takes the Unit Name passed and returns the found Unit'store Value
+         * Takes the Unit Name passed and returns the found Unit's Value
          * @param name Unit Name
          * @return Unit Value of the Unit Name passed in. Returns 0.0 if Unit Name cannot be found.
          */
@@ -698,7 +698,7 @@ public class UnitOf implements Serializable {
 
         /**
          * Initializes the declared new UnitOf.Anything variable with its Unit Name/Value.
-         * Following this with UnitOf.Anything'store to() will convert this value to the desired type'store value
+         * Following this with UnitOf.Anything's to() will convert this value to the desired type's value
          * @param fromValue Starting Unit Value to be converted
          * @param fromName Starting Unit Name to be converted
          */
@@ -5216,7 +5216,7 @@ public class UnitOf implements Serializable {
         }
 
         /*
-        Only used in Temperature'store conversion method.
+        Only used in Temperature's conversion method.
         converts value passed of any Temperature unit into Celsius
         */
         private final double toCelsius(double v, TemperatureUnits t) {
@@ -5235,7 +5235,7 @@ public class UnitOf implements Serializable {
         }
 
         /*
-        Only used in Temperature'store conversion method.
+        Only used in Temperature's conversion method.
         Converts Celsius value passed into any Temperature unit.
         */
         private final double fromCelsiusToType(double v, TemperatureUnits t) {

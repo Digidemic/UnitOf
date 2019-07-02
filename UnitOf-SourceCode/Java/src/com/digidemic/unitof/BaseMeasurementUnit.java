@@ -32,7 +32,7 @@ public class BaseMeasurementUnit<M> implements Serializable {
     protected ConversionHelper<M> conversionHelper = new ConversionHelper<>();    //Instantiate class ConversionHelper.java for variables needed to perform conversions.
 
     /**
-     * Returns value initially passed into the measurement'store "from" method.
+     * Returns value initially passed into the measurement's "from" method.
      */
     public final Object getValuePassed() {
         return (conversionHelper.isObjDouble) ? conversionHelper.value : conversionHelper.obj;    //true returns numeric value passed, false returns Object passed.

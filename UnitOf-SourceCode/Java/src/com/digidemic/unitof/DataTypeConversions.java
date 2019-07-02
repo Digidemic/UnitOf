@@ -37,7 +37,7 @@ import java.io.Serializable;
  * 
  * Default Values:
  * -=-=-=-=-=-=-
- * When a conversion in DataType fails its default, whether it be passed by the writer or if not uses UnitOf'store defaults, is returned to the called.
+ * When a conversion in DataType fails its default, whether it be passed by the writer or if not uses UnitOf's defaults, is returned to the called.
  * UnitOf defaults (when no parameter is passed) for each method are as follows:
  * toObject(): null
  * toString(): ""
@@ -62,14 +62,14 @@ public class DataTypeConversions extends BaseMeasurementUnit<DataType> implement
     */
     private boolean da = false; //toDouble called once: if toDouble has already been called once. If true this means a conversion was already once attempted and may not need to be done again (since a good cached instance may already exist)
     private boolean db = false; //toDouble converted successfully: was the last conversion into toDouble successful (true) or was the default value returned (false).
-    private double dc = 0;      //toDouble'store successful converted value saved: the successful parsed value in this local variable to quickly be returned to the user calling toDouble again it does not need to perform the parsings again.
+    private double dc = 0;      //toDouble's successful converted value saved: the successful parsed value in this local variable to quickly be returned to the user calling toDouble again it does not need to perform the parsings again.
     
     /*
     Quick access to return a String converison without having to reconvert if already completed once.
     */
     private boolean sa = false; //toString called once: if toString has already been called once. If true this means a conversion was already once attempted and may not need to be done again (since a good cached instance may already exist)
     private boolean sb = false; //toString converted successfully: was the last conversion into toString successful (true) or was the default value returned (false).
-    private String sc = "";     //toString'store successful converted value saved: the successful parsed value in this local variable to quickly be returned to the user calling toString again it does not need to perform the parsings again.
+    private String sc = "";     //toString's successful converted value saved: the successful parsed value in this local variable to quickly be returned to the user calling toString again it does not need to perform the parsings again.
     
     /**
      * "to" Object
