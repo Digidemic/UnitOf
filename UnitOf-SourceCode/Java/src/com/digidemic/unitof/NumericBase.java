@@ -26,7 +26,7 @@ package com.digidemic.unitof;
 /**
  * NumericBase Units
  */
-public enum S {
+public enum NumericBase {
     B11(11),    //Base 11
     B12(12),    //Base 12
     B13(13),    //Base 13
@@ -64,7 +64,8 @@ public enum S {
     B8(8);      //Octal / Base 8
 
     public final int TO_B10;    //Key: Base 10 / Decimal
-    S(int v){
-        this.TO_B10 = v;
+
+    NumericBase(int valueInBase10) {
+        this.TO_B10 = valueInBase10;
     }
 }

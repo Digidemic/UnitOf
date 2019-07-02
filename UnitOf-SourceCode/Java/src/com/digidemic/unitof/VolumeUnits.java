@@ -3,17 +3,17 @@
  * (c) 2018 DIGIDEMIC, LLC - All Rights Reserved
  * UnitOf developed by Adam Steinberg of DIGIDEMIC, LLC
  * License: Apache License 2.0
- * 
+ *
  * ====
- * 
+ *
  * Copyright 2018 DIGIDEMIC, LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,10 +25,10 @@ package com.digidemic.unitof;
 
 /**
  * Volume Units
- * 
- * All unit values are conversions of M (Cubic Meter) at the value of 1 converted into each unit.
+ *
+ * All unit values are conversions of FrequencyUnits (Cubic Meter) at the value of 1 converted into each unit.
  */
-public enum Z{
+public enum VolumeUnits {
     ACFTUS(0.0008107083295205), //Acre Foot (US)
     ACIN(0.009728558325479),    //Acre Inch
     ACFTO(0.0008107131937899),  //Acre Foot
@@ -94,9 +94,10 @@ public enum Z{
     TSPUS(202884.1362111),      //Teaspoon (US)
     TL(1e-9),                   //Teraliter 
     TUN(1.048301795072);        //Tun
-    
+
     public final double TO_M;   //Key: Cubic Meter
-    Z(double v){
-        this.TO_M = v;
+
+    VolumeUnits(double valueInCubicMeter) {
+        this.TO_M = valueInCubicMeter;
     }
 }

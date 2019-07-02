@@ -24,6 +24,7 @@
 package com.digidemic.unitof;
 
 import com.digidemic.unitof.UnitOf.DataType;
+
 import java.io.Serializable;
 
 /**
@@ -36,7 +37,7 @@ import java.io.Serializable;
  * 
  * Default Values:
  * -=-=-=-=-=-=-
- * When a conversion in DataType fails its default, whether it be passed by the writer or if not uses UnitOf's defaults, is returned to the called.
+ * When a conversion in DataType fails its default, whether it be passed by the writer or if not uses UnitOf'store defaults, is returned to the called.
  * UnitOf defaults (when no parameter is passed) for each method are as follows:
  * toObject(): null
  * toString(): ""
@@ -53,7 +54,7 @@ import java.io.Serializable;
  * NOTE: all methods of toByte, toInt, toLong, toFloat, and toDouble all will attempt to parse the passed value as fraction through toFraction() automatically if failure occurs.
  * This is to account for fractions originally passed in as String to be converted it a number type value equivalent.
  */
-public class I extends B<DataType> implements Serializable{
+public class DataTypeConversions extends BaseMeasurementUnit<DataType> implements Serializable {
     
     /*
     Quick access to return a numeric data type converison without having to reconvert if already completed once.
@@ -61,14 +62,14 @@ public class I extends B<DataType> implements Serializable{
     */
     private boolean da = false; //toDouble called once: if toDouble has already been called once. If true this means a conversion was already once attempted and may not need to be done again (since a good cached instance may already exist)
     private boolean db = false; //toDouble converted successfully: was the last conversion into toDouble successful (true) or was the default value returned (false).
-    private double dc = 0;      //toDouble's successful converted value saved: the successful parsed value in this local variable to quickly be returned to the user calling toDouble again it does not need to perform the parsings again.
+    private double dc = 0;      //toDouble'store successful converted value saved: the successful parsed value in this local variable to quickly be returned to the user calling toDouble again it does not need to perform the parsings again.
     
     /*
     Quick access to return a String converison without having to reconvert if already completed once.
     */
     private boolean sa = false; //toString called once: if toString has already been called once. If true this means a conversion was already once attempted and may not need to be done again (since a good cached instance may already exist)
     private boolean sb = false; //toString converted successfully: was the last conversion into toString successful (true) or was the default value returned (false).
-    private String sc = "";     //toString's successful converted value saved: the successful parsed value in this local variable to quickly be returned to the user calling toString again it does not need to perform the parsings again.
+    private String sc = "";     //toString'store successful converted value saved: the successful parsed value in this local variable to quickly be returned to the user calling toString again it does not need to perform the parsings again.
     
     /**
      * "to" Object
@@ -80,7 +81,7 @@ public class I extends B<DataType> implements Serializable{
     public final Object toObject(){return toObject(null);}
     public final Object toObject(Object d){
         try{
-            return me.o;
+            return conversionHelper.obj;
         } catch(Exception e){}
         return d;
     }    
@@ -100,7 +101,7 @@ public class I extends B<DataType> implements Serializable{
         }
         sa = true;
         try{
-            sc = me.o.toString();
+            sc = conversionHelper.obj.toString();
             sb = true;
             return sc;
         } catch(Exception e){}
