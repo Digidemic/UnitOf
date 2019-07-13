@@ -123,4 +123,4 @@ UnitOf website, logo, Palindrome Conversion Algorithm, and all source code & exa
 
 ## License
 - UnitOf licensed under **[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)**
-- Copyright 2018 © <a href="http://digidemicsoftware.com/">DIGIDEMIC, LLC</a>.
+- Copyright 2018 © <a href="https://digidemic.io/">DIGIDEMIC, LLC</a>.
