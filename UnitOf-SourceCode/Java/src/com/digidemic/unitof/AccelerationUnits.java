@@ -28,7 +28,7 @@ package com.digidemic.unitof;
  * 
  * All unit values are conversions of each unit at the value of 1 converted into MS (Meter per Second Squared).
  */
-public enum D {
+public enum AccelerationUnits {
     AS(1e-18),          //Attometer per Second Squared
     CS(1e-2),           //Centimeter per Second Squared
     DS(1e-1),           //Decimeter per Second Squared
@@ -64,7 +64,8 @@ public enum D {
     YDS(0.9144);        //Yard per Second Squared
     
     public final double TO_MS;  //Key: Meter per Second Squared
-    D(double v){
-        this.TO_MS = v;
+
+    AccelerationUnits(double valueInMeterPerSecondSquared) {
+        this.TO_MS = valueInMeterPerSecondSquared;
     }
 }

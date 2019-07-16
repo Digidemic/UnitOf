@@ -28,7 +28,7 @@ package com.digidemic.unitof;
  * 
  * All unit values are conversions of MCM (Meter per Cubic Centimeter) at the value of 1 converted into each unit.
  */
-public enum N {
+public enum FuelEconomyUnits {
     CML(1e5),               //Centimeter per Liter    
     DAML(1e2),              //Dekameter per Liter
     EML(1e-15),             //Exameter per Liter
@@ -63,7 +63,8 @@ public enum N {
     TML(1e-9);              //Terameter per Liter
     
     public final double TO_KML; //Key: Kilometer per Liter
-    N(double v){
-        this.TO_KML = v;
+
+    FuelEconomyUnits(double valueInKilometerPerLiter) {
+        this.TO_KML = valueInKilometerPerLiter;
     }
 }

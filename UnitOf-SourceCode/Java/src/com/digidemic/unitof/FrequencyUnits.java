@@ -28,7 +28,7 @@ package com.digidemic.unitof;
  * 
  * All unit values are conversions of MHZ (Megahertz) at the value of 1 converted into each unit.
  */
-public enum M {  
+public enum FrequencyUnits {
     AHZ(1e24),  //Attohertz 
     CHZ(1e8),   //Centihertz
     CS(1e6),    //Cycle per Second
@@ -53,7 +53,8 @@ public enum M {
     THZ(1e-6);  //Terahertz
     
     public final double TO_MHZ; //Key: Megahertz
-    M(double v){
-        this.TO_MHZ = v;
+
+    FrequencyUnits(double valueInMegahertz) {
+        this.TO_MHZ = valueInMegahertz;
     }
 }

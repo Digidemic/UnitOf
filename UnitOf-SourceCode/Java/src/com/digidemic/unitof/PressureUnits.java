@@ -28,7 +28,7 @@ package com.digidemic.unitof;
  * 
  * All unit values are conversions of PA (Pascal) at the value of 1 converted into each unit.
  */
-public enum T {
+public enum PressureUnits {
     APA(1e18),                  //Attopascal
     BAR(1e-5),                  //Bar
     BA(1e1),                    //Barye 
@@ -90,7 +90,8 @@ public enum T {
     TORR(1/133.3223684211);     //Torr
     
     public final double TO_PA;  //Key: Pascal
-    T(double v){
-        this.TO_PA = v;
+
+    PressureUnits(double valueInPascal) {
+        this.TO_PA = valueInPascal;
     }
 }

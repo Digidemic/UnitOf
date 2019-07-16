@@ -28,7 +28,7 @@ package com.digidemic.unitof;
  * 
  * All unit values are conversions of D (Degree) at the value of 1 converted into each unit.
  */
-public enum E {
+public enum AngleUnits {
     C(1/360.0),         //Circle
     D(1),               //Degree
     G(1/0.9),           //Gradian
@@ -44,7 +44,8 @@ public enum E {
     T(1/360.0);         //Turn
     
     public final double TO_D;   //Key: Degree
-    E(double v){
-        this.TO_D = v;
+
+    AngleUnits(double valueInDegrees) {
+        this.TO_D = valueInDegrees;
     }
 }
