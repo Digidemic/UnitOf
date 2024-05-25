@@ -69,8 +69,31 @@ var h = x.convertNow("3", "FEET", "METERS"); //0.9144 returned as 3 feet is 0.91
 ## Installation
 >Clone the UnitOf repo to your local machine using `https://github.com/digidemic/UnitOf`<br>Only the single compiled UnitOf file of its language needs to be imported and referenced.
 
-
 ### Java
+
+#### JitPack / build.gradle
+[![](https://jitpack.io/v/Digidemic/unitof.svg)](https://jitpack.io/#Digidemic/unitof)
+1) Add JitPack to your project's root `build.gradle` at the end of `repositories`:
+- ```groovy
+  dependencyResolutionManagement {
+      repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+      repositories {
+          mavenCentral()
+          maven { url 'https://jitpack.io' }
+    }
+  }
+  ```
+2) In the `build.gradle` of the module(s) you wish to use UnitOf with, add the following to `dependencies`:
+- ```groovy
+  dependencies {
+      implementation 'com.github.digidemic:unitof:1.0.1'
+  }
+  ```
+3) [Sync gradle](https://www.delasign.com/blog/how-to-sync-an-android-project-with-its-gradle-files-in-android-studio/) successfully.
+4) Done! Your project is now ready to use UnitOf. Go to [Examples](#examples) or [the UnitOf website](https://digidemic.github.io/UnitOf/) for UnitOf usage!
+
+#### By Importing Jar
+
 >1) Import `/UnitOf.jar` from the cloned repo into your project.
 >2) In your classes using UnitOf, add `import com.digidemic.unitof.UnitOf;` to your list of imports.
 - ##### Import using  Netbeans IDE 8.2
@@ -118,9 +141,20 @@ Install-Package UnitOf -Version 1.0.0
         - `JavaScript` - UnitOf_v1.2.3.0b
         - `C#` - UnitOf_v1.2.3.2a
 
-## Author
-UnitOf website, logo, Palindrome Conversion Algorithm, and all source code & example projects for Java, JavaScript & C# created by Adam Steinberg of DIGIDEMIC, LLC
-
 ## License
-- UnitOf licensed under **[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)**
-- Copyright 2018 © <a href="https://digidemic.io/">DIGIDEMIC, LLC</a>.
+UnitOf website, logo, Palindrome Conversion Algorithm, and all source code & example projects for Java, JavaScript & C# created by Adam Steinberg of DIGIDEMIC, LLC
+```
+Copyright 2024 DIGIDEMIC, LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
