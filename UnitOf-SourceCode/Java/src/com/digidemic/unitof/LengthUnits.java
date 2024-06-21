@@ -25,10 +25,10 @@ package com.digidemic.unitof;
 
 /**
  * Length Units
- * 
+ *
  * All unit values are conversions of M (Meter) at the value of 1 converted into each unit.
  */
-public enum O {
+public enum LengthUnits {
     A(1e10),                    //Angstrom
     AM(1e18),                   //Attometer 
     BC(1/(0.2286/27.0)),        //Barleycorn 
@@ -84,7 +84,8 @@ public enum O {
     YD(1/0.9144);               //Yard
     
     public final double TO_M;   //Key: Meter
-    O(double v){
-        this.TO_M = v;
+
+    LengthUnits(double valueInMeter) {
+        this.TO_M = valueInMeter;
     }
 }

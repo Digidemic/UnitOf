@@ -28,7 +28,7 @@ package com.digidemic.unitof;
  * 
  * All unit values are conversions of MB (Megabyte) at the value of 1 converted into each unit.
  */
-public enum G {
+public enum DataStorageUnits {
     B(1.0 * 8.0 * 1024.0 * 1024.0), //Bit
     BL(1.0 * 1.0 * 2.0 * 1024.0),   //Block
     BD2(1/51200.0),                 //Blu-ray Disc (Double-Layer)
@@ -81,7 +81,8 @@ public enum G {
     ZB(1/(Math.pow(1024, 5)));      //Zettabyte
     
     public final double TO_MB;  //Key: Megabyte
-    G(double v){
-        this.TO_MB = v;
+
+    DataStorageUnits(double valueInMegabytes) {
+        this.TO_MB = valueInMegabytes;
     }
 }

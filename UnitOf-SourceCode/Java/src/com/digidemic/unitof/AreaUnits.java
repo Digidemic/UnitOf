@@ -25,10 +25,10 @@ package com.digidemic.unitof;
 
 /**
  * Area Units
- * 
+ *
  * All unit values are conversions of M (Square Meter) at the value of 1 converted into each unit.
  */
-public enum F {   
+public enum AreaUnits {
     AC(1/4046.8564224),     //Acre
     A(1e-2),                //Are
     AR(1/3418.740000066),   //Arpent
@@ -58,7 +58,8 @@ public enum F {
     YD(1/0.83612736);       //Square Yard
 
     public final double TO_M;   //Key: Square Meter
-    F(double v){
-        this.TO_M = v;
+
+    AreaUnits(double valueInSquareMeters) {
+        this.TO_M = valueInSquareMeters;
     }
 }

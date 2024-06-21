@@ -24,6 +24,7 @@
 package com.digidemic.unitof;
 
 import com.digidemic.unitof.UnitOf.DataType;
+
 import java.io.Serializable;
 
 /**
@@ -53,7 +54,7 @@ import java.io.Serializable;
  * NOTE: all methods of toByte, toInt, toLong, toFloat, and toDouble all will attempt to parse the passed value as fraction through toFraction() automatically if failure occurs.
  * This is to account for fractions originally passed in as String to be converted it a number type value equivalent.
  */
-public class I extends B<DataType> implements Serializable{
+public class DataTypeConversions extends BaseMeasurementUnit<DataType> implements Serializable {
     
     /*
     Quick access to return a numeric data type converison without having to reconvert if already completed once.
@@ -80,7 +81,7 @@ public class I extends B<DataType> implements Serializable{
     public final Object toObject(){return toObject(null);}
     public final Object toObject(Object d){
         try{
-            return me.o;
+            return conversionHelper.obj;
         } catch(Exception e){}
         return d;
     }    
@@ -100,7 +101,7 @@ public class I extends B<DataType> implements Serializable{
         }
         sa = true;
         try{
-            sc = me.o.toString();
+            sc = conversionHelper.obj.toString();
             sb = true;
             return sc;
         } catch(Exception e){}

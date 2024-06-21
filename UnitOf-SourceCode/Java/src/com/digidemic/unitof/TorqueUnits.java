@@ -3,17 +3,17 @@
  * (c) 2018 DIGIDEMIC, LLC - All Rights Reserved
  * UnitOf developed by Adam Steinberg of DIGIDEMIC, LLC
  * License: Apache License 2.0
- * 
+ *
  * ====
- * 
+ *
  * Copyright 2018 DIGIDEMIC, LLC
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,10 +25,10 @@ package com.digidemic.unitof;
 
 /**
  * Torque Units
- * 
+ *
  * All unit values are conversions of KGFM (Kilogram Force Meter) at the value of 1 converted into each unit.
  */
-public enum Y {
+public enum TorqueUnits {
     DYNCM(9.80665e7),       //Dyne Centimeter
     DYNM(9.80665e5),        //Dyne Meter
     DYNMM(9.80665e8),       //Dyne Millimeter
@@ -46,9 +46,10 @@ public enum Y {
     OZFIN(1388.738622898),  //Ounce Force Inch
     LBFFT(7.23301357557),   //Pound Force Foot
     LBFIN(86.79616290684);  //Pound Force Inch
-    
+
     public final double TO_KGFM;    //Key: Kilogram Force Meter
-    Y(double v){
-        this.TO_KGFM = v;
+
+    TorqueUnits(double valueInKilogramForceMeter) {
+        this.TO_KGFM = valueInKilogramForceMeter;
     }
 }
